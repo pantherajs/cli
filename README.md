@@ -1,2 +1,2 @@
 # cli
-> Command line interface tool for managing Panthera installations
+> A command line interface tool for managing Panthera installations.
