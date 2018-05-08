@@ -11,6 +11,9 @@
     "lint": "eslint bin/",
     "test": "nyc ava"
   },
+  "engines": {
+    "node": ">=8.2.1"
+  },
   "author": "Connor Wiseman",
   "license": "MIT",
   "dependencies": {
