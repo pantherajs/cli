@@ -1,0 +1,6 @@
+CREATE TYPE alias_type AS ENUM (
+  'SYSTEM',
+  'PRIMARY',
+  'SECONDARY',
+  'EXTERNAL'
+);
