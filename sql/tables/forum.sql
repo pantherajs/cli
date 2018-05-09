@@ -20,5 +20,5 @@ CREATE INDEX forum_index_parent_forum_id ON forum(parent_forum_id);
 CREATE TRIGGER update_forum_modified BEFORE UPDATE ON forum
   FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
-GRANT USAGE, SELECT ON SEQUENCE forum_id_seq TO panthera_api;
-GRANT SELECT, INSERT, UPDATE, DELETE ON forum TO panthera_api;
+GRANT USAGE, SELECT ON SEQUENCE forum_id_seq TO %I;
+GRANT SELECT, INSERT, UPDATE, DELETE ON forum TO %I;
