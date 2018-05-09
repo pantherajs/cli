@@ -20,6 +20,8 @@ const categoryTable         = require('../sql/tables/category');
 const forumTable            = require('../sql/tables/forum');
 const topicTable            = require('../sql/tables/topic');
 const postTable             = require('../sql/tables/post');
+const categoryPermTable     = require('../sql/tables/category-permission');
+const forumPermTable        = require('../sql/tables/forum-permission');
 const commitTransaction     = require('../sql/misc/commit-transaction');
 const rollbackTransaction   = require('../sql/misc/rollback-transaction');
 
@@ -42,6 +44,8 @@ const tasks = [
   forumTable,
   topicTable,
   postTable,
+  categoryPermTable,
+  forumPermTable,
   commitTransaction,
   rollbackTransaction
 ];
