@@ -9,7 +9,7 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `category-permission` table...';
+const title = 'Creating `category_permission` table...';
 
 /**
  * @param  {Object} ctx
