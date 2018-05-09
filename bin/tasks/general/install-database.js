@@ -14,6 +14,12 @@ const uuidFunction          = require('../sql/functions/uuid');
 const aliasType             = require('../sql/types/alias-type');
 const updateModifiedTrigger = require('../sql/triggers/update-modified-column');
 const accountTable          = require('../sql/tables/account');
+const roleTable             = require('../sql/tables/role');
+const aliasTable            = require('../sql/tables/alias');
+const categoryTable         = require('../sql/tables/category');
+const forumTable            = require('../sql/tables/forum');
+const topicTable            = require('../sql/tables/topic');
+const postTable             = require('../sql/tables/post');
 const commitTransaction     = require('../sql/misc/commit-transaction');
 const rollbackTransaction   = require('../sql/misc/rollback-transaction');
 
@@ -30,6 +36,12 @@ const tasks = [
   aliasType,
   updateModifiedTrigger,
   accountTable,
+  roleTable,
+  aliasTable,
+  categoryTable,
+  forumTable,
+  topicTable,
+  postTable,
   commitTransaction,
   rollbackTransaction
 ];
