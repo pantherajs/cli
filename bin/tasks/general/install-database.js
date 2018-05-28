@@ -5,25 +5,46 @@
 
 const Listr = require('listr');
 
-const beginTransaction      = require('../sql/misc/begin-transaction');
-const dropSchema            = require('../sql/misc/drop-schema');
-const createSchema          = require('../sql/misc/create-schema');
-const createApiUser         = require('../sql/misc/create-api-user');
-const setSearchPath         = require('../sql/misc/set-search-path');
-const uuidFunction          = require('../sql/functions/uuid');
-const aliasType             = require('../sql/types/alias-type');
-const updateModifiedTrigger = require('../sql/triggers/update-modified-column');
-const accountTable          = require('../sql/tables/account');
-const roleTable             = require('../sql/tables/role');
-const aliasTable            = require('../sql/tables/alias');
-const categoryTable         = require('../sql/tables/category');
-const forumTable            = require('../sql/tables/forum');
-const topicTable            = require('../sql/tables/topic');
-const postTable             = require('../sql/tables/post');
-const categoryPermTable     = require('../sql/tables/category-permission');
-const forumPermTable        = require('../sql/tables/forum-permission');
-const commitTransaction     = require('../sql/misc/commit-transaction');
-const rollbackTransaction   = require('../sql/misc/rollback-transaction');
+const beginTransaction          = require('../sql/misc/begin-transaction');
+const dropSchema                = require('../sql/misc/drop-schema');
+const createSchema              = require('../sql/misc/create-schema');
+const createApiUser             = require('../sql/misc/create-api-user');
+const setSearchPath             = require('../sql/misc/set-search-path');
+const uuidFunction              = require('../sql/functions/uuid');
+const aliasType                 = require('../sql/types/alias-type');
+const updateModifiedTrigger     = require('../sql/triggers/update-modified-column');
+const accountTable              = require('../sql/tables/account');
+const roleTable                 = require('../sql/tables/role');
+const aliasTable                = require('../sql/tables/alias');
+const categoryTable             = require('../sql/tables/category');
+const forumTable                = require('../sql/tables/forum');
+const ancestorForumsFunction    = require('../sql/functions/ancestor-forums');
+const descendantForumsFunction  = require('../sql/functions/descendant-forums');
+const distinctReference         = require('../sql/triggers/distinct-parent-forum-reference');
+const noncircularReference      = require('../sql/triggers/noncircular-parent-forum-reference');
+const topicTable                = require('../sql/tables/topic');
+const postTable                 = require('../sql/tables/post');
+const topicStatsMatTable        = require('../sql/tables/topic-statistics-mat');
+const refreshTopicStatsFunction = require('../sql/functions/refresh-topic-statistics-mat');
+const topicStatsView            = require('../sql/views/topic-statistics');
+const forumStatsMatTable        = require('../sql/tables/forum-statistics-mat');
+const refreshForumStatsFunction = require('../sql/functions/refresh-forum-statistics-mat');
+const forumStatsView            = require('../sql/views/forum-statistics');
+const deletePostTrigger         = require('../sql/triggers/delete-post');
+const deleteTopicTrigger        = require('../sql/triggers/delete-topic');
+const insertForumTrigger        = require('../sql/triggers/insert-forum');
+const insertPostTrigger         = require('../sql/triggers/insert-post');
+const insertTopicTrigger        = require('../sql/triggers/insert-topic');
+const updateForumTrigger        = require('../sql/triggers/update-forum');
+const updateTopicTrigger        = require('../sql/triggers/update-topic');
+const updatePostTrigger         = require('../sql/triggers/update-post');
+const categoryPermTable         = require('../sql/tables/category-permission');
+const forumPermTable            = require('../sql/tables/forum-permission');
+const forumStatisticsView       = require('../sql/views/forum-statistics');
+const topicStatisticsView       = require('../sql/views/topic-statistics');
+const indexView                 = require('../sql/views/index');
+const commitTransaction         = require('../sql/misc/commit-transaction');
+const rollbackTransaction       = require('../sql/misc/rollback-transaction');
 
 /**
  * @type {Array.<Object>}
@@ -41,11 +62,30 @@ const tasks = [
   roleTable,
   aliasTable,
   categoryTable,
-  forumTable,
-  topicTable,
-  postTable,
   categoryPermTable,
+  forumTable,
   forumPermTable,
+  distinctReference,
+  noncircularReference,
+  ancestorForumsFunction,
+  descendantForumsFunction,
+  insertForumTrigger,
+  updateForumTrigger,
+  topicTable,
+  deleteTopicTrigger,
+  insertTopicTrigger,
+  updateTopicTrigger,
+  postTable,
+  deletePostTrigger,
+  insertPostTrigger,
+  updatePostTrigger,
+  topicStatsMatTable,
+  refreshTopicStatsFunction,
+  topicStatsView,
+  forumStatsMatTable,
+  refreshForumStatsFunction,
+  forumStatsView,
+  indexView,
   commitTransaction,
   rollbackTransaction
 ];
