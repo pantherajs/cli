@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS forum (
 );
 
 CREATE INDEX forum_index_category_id     ON forum(category_id);
-CREATE INDEX forum_index_parent_forum_id ON forum(parent_forum_id);
+CREATE INDEX forum_index_parent_forum_id ON forum(parent_forum_id ASC NULLS FIRST);
 
 CREATE TRIGGER update_forum_modified BEFORE UPDATE ON forum
   FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
