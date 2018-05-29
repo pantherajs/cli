@@ -44,7 +44,8 @@ const updateTopicTrigger        = require('../sql/triggers/update-topic');
 const updatePostTrigger         = require('../sql/triggers/update-post');
 const categoryPermTable         = require('../sql/tables/category-permission');
 const forumPermTable            = require('../sql/tables/forum-permission');
-const indexView                 = require('../sql/views/index');
+const indexView                 = require('../sql/views/index-view');
+const categoryView              = require('../sql/views/category-view');
 const commitTransaction         = require('../sql/misc/commit-transaction');
 const rollbackTransaction       = require('../sql/misc/rollback-transaction');
 
@@ -91,6 +92,7 @@ const tasks = [
   forumStatsMatTable,
   refreshForumStatsFunction,
   forumStatsView,
+  categoryView,
   indexView,
   commitTransaction,
   rollbackTransaction
