@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/views/index.js
+ * @file bin/tasks/sql/views/index-view.js
  */
 'use strict';
 
@@ -9,7 +9,7 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `index` view...';
+const title = 'Creating `index_view` view...';
 
 /**
  * @param  {Object} ctx
@@ -19,7 +19,7 @@ const title = 'Creating `index` view...';
 const task = ctx => {
   const user = ctx.env.PANTHERA_API_USER;
 
-  return sqlTask(ctx, 'views/index.sql', user);
+  return sqlTask(ctx, 'views/index-view.sql', user);
 };
 
 /**
