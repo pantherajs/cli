@@ -16,6 +16,10 @@ const updateModifiedTrigger     = require('../sql/triggers/update-modified-colum
 const accountTable              = require('../sql/tables/account');
 const roleTable                 = require('../sql/tables/role');
 const aliasTable                = require('../sql/tables/alias');
+const aliasStatsMat             = require('../sql/tables/alias-statistics-mat');
+const insertAliasTrigger        = require('../sql/triggers/insert-alias');
+const refreshAliasStatsFunction = require('../sql/functions/refresh-alias-statistics-mat');
+const aliasStatsView            = require('../sql/views/alias-statistics');
 const categoryTable             = require('../sql/tables/category');
 const forumTable                = require('../sql/tables/forum');
 const ancestorForumsFunction    = require('../sql/functions/ancestor-forums');
@@ -40,8 +44,6 @@ const updateTopicTrigger        = require('../sql/triggers/update-topic');
 const updatePostTrigger         = require('../sql/triggers/update-post');
 const categoryPermTable         = require('../sql/tables/category-permission');
 const forumPermTable            = require('../sql/tables/forum-permission');
-const forumStatisticsView       = require('../sql/views/forum-statistics');
-const topicStatisticsView       = require('../sql/views/topic-statistics');
 const indexView                 = require('../sql/views/index');
 const commitTransaction         = require('../sql/misc/commit-transaction');
 const rollbackTransaction       = require('../sql/misc/rollback-transaction');
@@ -61,6 +63,7 @@ const tasks = [
   accountTable,
   roleTable,
   aliasTable,
+  insertAliasTrigger,
   categoryTable,
   categoryPermTable,
   forumTable,
@@ -79,6 +82,9 @@ const tasks = [
   deletePostTrigger,
   insertPostTrigger,
   updatePostTrigger,
+  aliasStatsMat,
+  refreshAliasStatsFunction,
+  aliasStatsView,
   topicStatsMatTable,
   refreshTopicStatsFunction,
   topicStatsView,
