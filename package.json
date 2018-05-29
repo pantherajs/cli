@@ -2,7 +2,7 @@
   "name": "@panthera/cli",
   "version": "0.0.0",
   "description": "A command line interface tool for managing Panthera installations.",
-  "main": "index.js",
+  "main": "bin/cli.js",
   "bin": {
     "panthera": "bin/index.js"
   },
@@ -16,6 +16,14 @@
   },
   "author": "Connor Wiseman",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pantherajs/cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pantherajs/cli/issues"
+  },
+  "homepage": "https://github.com/pantherajs/cli#readme",
   "dependencies": {
     "dotenv": "^5.0.1",
     "execa": "^0.10.0",
@@ -41,7 +49,7 @@
     "exclude": [
       "coverage",
       "node_modules",
-      "postgresql",
+      "sql",
       "test"
     ],
     "reporter": [
