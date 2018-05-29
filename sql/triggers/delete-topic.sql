@@ -7,6 +7,11 @@ BEGIN
   WHERE forum_id IN (SELECT ancestor_forums(OLD.forum_id))
     AND OLD.created <= expiry;
 
+  UPDATE alias_statistics_mat SET
+    expiry = '-infinity'
+  WHERE alias_id = OLD.author_alias_id
+    AND OLD.created <= expiry;
+
   RETURN OLD;
 END;
 $delete_topic$

@@ -4,11 +4,11 @@ $update_post$
 BEGIN
   IF (OLD.topic_id <> NEW.topic_id) THEN
     UPDATE topic_statistics_mat SET
-      expiry = NEW.created
+      expiry = NEW.modified
     WHERE topic_id IN (OLD.topic_id, NEW.topic_id);
 
     UPDATE forum_statistics_mat SET
-      expiry = NEW.created
+      expiry = NEW.modified
     WHERE forum_id IN ((
       SELECT ancestor_forums((
         SELECT
@@ -24,6 +24,12 @@ BEGIN
         WHERE topic.id = NEW.topic_id
       ))
     ));
+  END IF;
+
+  IF (OLD.author_alias_id <> NEW.author_alias_id) THEN
+    UPDATE alias_statistics_mat SET
+      expiry = NEW.modified
+    WHERE alias_id IN (OLD.author_alias_id, NEW.author_alias_id);
   END IF;
 
   RETURN NEW;

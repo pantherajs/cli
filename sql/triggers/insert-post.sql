@@ -17,6 +17,10 @@ BEGIN
     ))
   ));
 
+  UPDATE alias_statistics_mat SET
+    expiry = NEW.created
+  WHERE alias_id = NEW.author_alias_id;
+
   RETURN NEW;
 END;
 $insert_post$
