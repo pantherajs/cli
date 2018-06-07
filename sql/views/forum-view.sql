@@ -30,13 +30,13 @@ CREATE OR REPLACE VIEW forum_view AS
     ON forum.id = subforum.parent_forum_id
   INNER JOIN forum_statistics
     ON forum.id = forum_statistics.forum_id
-  INNER JOIN topic
+  LEFT JOIN topic
     ON forum_statistics.recent_topic_id = topic.id
-  INNER JOIN alias AS topic_author
+  LEFT JOIN alias AS topic_author
     ON topic.author_alias_id = topic_author.id
-  INNER JOIN post
+  LEFT JOIN post
     ON forum_statistics.recent_post_id = post.id
-  INNER JOIN alias AS post_author
+  LEFT JOIN alias AS post_author
     ON post.author_alias_id = post_author.id
   GROUP BY
     forum.id,
