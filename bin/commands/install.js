@@ -50,7 +50,7 @@ const options = {
  */
 const handler = () => new Listr(tasks, options)
   .run(context())
-  .catch(error => {});
+  .catch(() => {});
 
 /**
  * A Yargs-compatible command object.
