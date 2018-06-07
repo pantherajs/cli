@@ -53,3 +53,5 @@ CREATE OR REPLACE VIEW forum_view AS
     post.created,
     post_author.id,
     post_author.name;
+
+GRANT SELECT ON forum_view TO %I;
