@@ -11,9 +11,12 @@ CREATE TABLE IF NOT EXISTS alias (
   CONSTRAINT alias_foreign_key_role_id    FOREIGN KEY (role_id)    REFERENCES role(id)
 );
 
-CREATE INDEX        alias_index_account_id     ON alias(account_id);
-CREATE INDEX        alias_index_role_id        ON alias(role_id);
-CREATE UNIQUE INDEX alias_unique_primary_alias ON alias(account_id, type) WHERE type = 'PRIMARY';
+CREATE INDEX alias_index_account_id
+  ON alias(account_id);
+CREATE INDEX alias_index_role_id
+  ON alias(role_id);
+CREATE UNIQUE INDEX alias_unique_primary_alias
+  ON alias(account_id, type) WHERE type = 'PRIMARY';
 
 CREATE TRIGGER update_alias_modified BEFORE UPDATE ON alias
   FOR EACH ROW EXECUTE PROCEDURE update_modified_column();

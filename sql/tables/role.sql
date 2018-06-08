@@ -5,8 +5,10 @@ CREATE TABLE IF NOT EXISTS role (
   name     CHARACTER VARYING(64)    NOT NULL,
   created  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  CONSTRAINT role_primary_key PRIMARY KEY (id),
-  CONSTRAINT role_unique_name UNIQUE      (name)
+  CONSTRAINT role_primary_key
+    PRIMARY KEY (id),
+  CONSTRAINT role_unique_name
+    UNIQUE (name)
 );
 
 CREATE TRIGGER update_role_modified BEFORE UPDATE ON role

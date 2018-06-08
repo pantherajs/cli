@@ -6,8 +6,10 @@ CREATE TABLE IF NOT EXISTS category (
   sort_key INTEGER                  NOT NULL DEFAULT 0,
   created  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  CONSTRAINT category_primary_key PRIMARY KEY (id),
-  CONSTRAINT category_unique_name UNIQUE (name)
+  CONSTRAINT category_primary_key
+    PRIMARY KEY (id),
+  CONSTRAINT category_unique_name
+    UNIQUE (name)
 );
 
 CREATE TRIGGER update_category_modified BEFORE UPDATE ON category

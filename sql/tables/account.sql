@@ -4,9 +4,12 @@ CREATE TABLE IF NOT EXISTS account (
   password_hash CHARACTER(60)            NOT NULL,
   created       TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  CONSTRAINT account_primary_key          PRIMARY KEY (id),
-  CONSTRAINT account_unique_email_address UNIQUE      (email_address),
-  CONSTRAINT account_valid_password_hash  CHECK       (password_hash ~ '^\$2[ayb]\$.{56}$')
+  CONSTRAINT account_primary_key
+    PRIMARY KEY (id),
+  CONSTRAINT account_unique_email_address
+    UNIQUE (email_address),
+  CONSTRAINT account_valid_password_hash
+    CHECK (password_hash ~ '^\$2[ayb]\$.{56}$')
 );
 
 CREATE TRIGGER update_account_modified BEFORE UPDATE ON account
