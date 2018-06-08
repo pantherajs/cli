@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const test  = require('ava');
+const test = require('ava');
 
 const cli = require('../bin/cli');
 
