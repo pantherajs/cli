@@ -20,6 +20,5 @@ RETURNS TABLE (
     id
   FROM ancestors;
 $ancestor_forums$
-  VOLATILE
-  SECURITY DEFINER
+  STABLE
   LANGUAGE sql;
