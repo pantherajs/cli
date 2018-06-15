@@ -26,11 +26,10 @@ const enabled = ctx => queryEnabled(ctx) && ctx.schemaExists === false;
  */
 const task = (ctx, task) => {
   const schema = ctx.env.PANTHERA_SCHEMA;
-  const user   = ctx.env.PANTHERA_API_USER;
 
   task.title = `Creating schema \`${schema}\`...`;
 
-  return sqlTask(ctx, 'misc/create-schema.sql', schema, schema, user);
+  return sqlTask(ctx, 'misc/create-schema.sql', schema);
 };
 
 /**
