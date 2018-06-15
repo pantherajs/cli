@@ -14,13 +14,17 @@ const uuidFunction              = require('../sql/functions/uuid');
 const aliasType                 = require('../sql/types/alias-type');
 const updateModifiedTrigger     = require('../sql/triggers/update-modified-column');
 const accountTable              = require('../sql/tables/account');
+const insertAccountTrigger      = require('../sql/triggers/insert-account');
 const roleTable                 = require('../sql/tables/role');
 const aliasTable                = require('../sql/tables/alias');
 const aliasStatsMat             = require('../sql/tables/alias-statistics-mat');
 const insertAliasTrigger        = require('../sql/triggers/insert-alias');
+const updateAliasTrigger        = require('../sql/triggers/update-alias');
+const deleteAliasTrigger        = require('../sql/triggers/delete-alias');
 const refreshAliasStatsFunction = require('../sql/functions/refresh-alias-statistics-mat');
 const aliasStatsView            = require('../sql/views/alias-statistics');
 const categoryTable             = require('../sql/tables/category');
+const insertCategoryTrigger     = require('../sql/triggers/insert-category');
 const forumTable                = require('../sql/tables/forum');
 const ancestorForumsFunction    = require('../sql/functions/ancestor-forums');
 const descendantForumsFunction  = require('../sql/functions/descendant-forums');
@@ -43,6 +47,10 @@ const updateForumTrigger        = require('../sql/triggers/update-forum');
 const updateTopicTrigger        = require('../sql/triggers/update-topic');
 const updatePostTrigger         = require('../sql/triggers/update-post');
 const categoryPermTable         = require('../sql/tables/category-permission');
+const updateCategoryPermTrigger = require('../sql/triggers/update-category-permission');
+const categoryViewableMatTable  = require('../sql/tables/category-viewable-mat');
+const refreshCategoryViewableFunction = require('../sql/functions/refresh-category-viewable-mat');
+const categoryViewableView      = require('../sql/views/category-viewable');
 const forumPermTable            = require('../sql/tables/forum-permission');
 const indexView                 = require('../sql/views/index-view');
 const forumView                 = require('../sql/views/forum-view');
@@ -55,19 +63,27 @@ const rollbackTransaction       = require('../sql/misc/rollback-transaction');
  */
 const tasks = [
   beginTransaction,
+  createApiUser,
   dropSchema,
   createSchema,
-  createApiUser,
   setSearchPath,
   uuidFunction,
   aliasType,
   updateModifiedTrigger,
   accountTable,
+  insertAccountTrigger,
   roleTable,
   aliasTable,
   insertAliasTrigger,
+  updateAliasTrigger,
+  deleteAliasTrigger,
   categoryTable,
+  insertCategoryTrigger,
   categoryPermTable,
+  updateCategoryPermTrigger,
+  categoryViewableMatTable,
+  refreshCategoryViewableFunction,
+  categoryViewableView,
   forumTable,
   forumPermTable,
   distinctReference,
