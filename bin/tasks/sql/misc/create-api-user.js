@@ -32,7 +32,6 @@ const file = 'misc/create-api-user.sql';
  * @private
  */
 const task = (ctx, task) => {
-  const schema   = ctx.env.PANTHERA_SCHEMA;
   const user     = ctx.env.PANTHERA_API_USER;
   const password = ctx.env.PANTHERA_API_PASS;
 
@@ -40,7 +39,7 @@ const task = (ctx, task) => {
 
   const start = process.hrtime();
 
-  return sqlTask(ctx, file, user, password, schema, user, user, schema)
+  return sqlTask(ctx, file, user, password)
     .then(() => task.title = pad(task.title, `${since(start)}ms`));
 };
 
