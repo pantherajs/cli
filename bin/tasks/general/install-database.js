@@ -9,6 +9,7 @@ const beginTransaction          = require('../sql/misc/begin-transaction');
 const dropSchema                = require('../sql/misc/drop-schema');
 const createSchema              = require('../sql/misc/create-schema');
 const createApiUser             = require('../sql/misc/create-api-user');
+const grantUserPermissions      = require('../sql/misc/grant-user-permissions');
 const setSearchPath             = require('../sql/misc/set-search-path');
 const uuidFunction              = require('../sql/functions/uuid');
 const aliasType                 = require('../sql/types/alias-type');
@@ -63,9 +64,10 @@ const rollbackTransaction       = require('../sql/misc/rollback-transaction');
  */
 const tasks = [
   beginTransaction,
-  createApiUser,
   dropSchema,
   createSchema,
+  createApiUser,
+  grantUserPermissions,
   setSearchPath,
   uuidFunction,
   aliasType,
