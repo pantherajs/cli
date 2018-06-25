@@ -39,7 +39,7 @@
   "devDependencies": {
     "ava": "1.0.0-beta.4",
     "codecov": "^3.0.2",
-    "eslint": "^4.19.1",
+    "eslint": "^5.0.0",
     "nyc": "^12.0.2",
     "proxyquire": "^2.0.1",
     "sinon": "^6.0.0"
