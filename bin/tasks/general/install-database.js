@@ -16,6 +16,7 @@ const aliasType                 = require('../sql/types/alias-type');
 const updateModifiedTrigger     = require('../sql/triggers/update-modified-column');
 const accountTable              = require('../sql/tables/account');
 const insertAccountTrigger      = require('../sql/triggers/insert-account');
+const accessTokenTable          = require('../sql/tables/access-token');
 const roleTable                 = require('../sql/tables/role');
 const aliasTable                = require('../sql/tables/alias');
 const aliasStatsMat             = require('../sql/tables/alias-statistics-mat');
@@ -74,6 +75,7 @@ const tasks = [
   updateModifiedTrigger,
   accountTable,
   insertAccountTrigger,
+  accessTokenTable,
   roleTable,
   aliasTable,
   insertAliasTrigger,
