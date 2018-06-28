@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/pantherajs/cli#readme",
   "dependencies": {
+    "chokidar": "^2.0.4",
     "dotenv": "^6.0.0",
     "execa": "^0.10.0",
     "listr": "^0.14.1",
@@ -39,10 +40,10 @@
   "devDependencies": {
     "ava": "1.0.0-beta.4",
     "codecov": "^3.0.2",
-    "eslint": "^5.0.0",
+    "eslint": "^5.0.1",
     "nyc": "^12.0.2",
     "proxyquire": "^2.0.1",
-    "sinon": "^6.0.0"
+    "sinon": "^6.0.1"
   },
   "nyc": {
     "exclude": [
