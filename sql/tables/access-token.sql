@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS access_token (
     ON DELETE CASCADE
 );
 
+CREATE INDEX access_token_index_token
+  ON access_token(token);
 CREATE INDEX access_token_index_account_id
   ON access_token(account_id);
 CREATE INDEX access_token_index_expires
