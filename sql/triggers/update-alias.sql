@@ -7,6 +7,11 @@ BEGIN
       expiry = NEW.modified
     WHERE account_id IN (OLD.account_id, NEW.account_id)
       AND NEW.modified <= expiry;
+
+    UPDATE forum_viewable_mat SET
+      expiry = NEW.modified
+    WHERE account_id IN (OLD.account_id, NEW.account_id)
+      AND NEW.modified <= expiry;
   END IF;
 
   RETURN NEW;

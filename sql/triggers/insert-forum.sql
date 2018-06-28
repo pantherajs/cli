@@ -12,6 +12,13 @@ BEGIN
     ));
   END IF;
 
+  INSERT INTO forum_viewable_mat (account_id, forum_id, expiry)
+  SELECT
+    account.id,
+    NEW.id,
+    NEW.created
+  FROM account;
+
   RETURN NEW;
 END;
 $insert_forum$

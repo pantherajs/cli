@@ -9,6 +9,13 @@ BEGIN
     NEW.created
   FROM category;
 
+  INSERT INTO forum_viewable_mat (account_id, forum_id, expiry)
+  SELECT
+    NEW.id,
+    forum.id,
+    NEW.created
+  FROM forum;
+
   RETURN NEW;
 END;
 $insert_account$
