@@ -13,7 +13,10 @@ CREATE OR REPLACE VIEW category_viewable AS
     stale.can_view,
     stale.expiry
   FROM category_viewable_mat
-    CROSS JOIN refresh_category_viewable_mat(category_viewable_mat.account_id) AS stale
+    CROSS JOIN refresh_category_viewable_mat(
+      category_viewable_mat.account_id,
+      category_viewable_mat.category_id
+    ) AS stale
   WHERE category_viewable_mat.expiry <= CURRENT_TIMESTAMP;
 
 GRANT SELECT ON category_viewable TO %I;

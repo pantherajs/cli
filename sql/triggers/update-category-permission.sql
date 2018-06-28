@@ -5,7 +5,7 @@ BEGIN
   IF (OLD.can_view <> NEW.can_view) THEN
     UPDATE category_viewable_mat SET
       expiry = NEW.modified
-    WHERE category_id = NEW.id
+    WHERE category_id = NEW.category_id
       AND NEW.modified <= expiry;
   END IF;
 
