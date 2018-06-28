@@ -4,7 +4,7 @@ $update_forum_permission$
 BEGIN
   IF (OLD.can_view <> NEW.can_view) THEN
     UPDATE forum_viewable_mat SET
-      expiry = NEW.modified
+      expiry = '-infinity'
     WHERE forum_id = NEW.forum_id
       AND NEW.modified <= expiry;
   END IF;

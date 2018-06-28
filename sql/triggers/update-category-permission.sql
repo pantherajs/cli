@@ -4,7 +4,7 @@ $update_category_permission$
 BEGIN
   IF (OLD.can_view <> NEW.can_view) THEN
     UPDATE category_viewable_mat SET
-      expiry = NEW.modified
+      expiry = '-infinity'
     WHERE category_id = NEW.category_id
       AND NEW.modified <= expiry;
   END IF;
