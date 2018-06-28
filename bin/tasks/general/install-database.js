@@ -53,7 +53,11 @@ const updateCategoryPermTrigger = require('../sql/triggers/update-category-permi
 const categoryViewableMatTable  = require('../sql/tables/category-viewable-mat');
 const refreshCategoryViewableFunction = require('../sql/functions/refresh-category-viewable-mat');
 const categoryViewableView      = require('../sql/views/category-viewable');
+const forumViewableMatTable     = require('../sql/tables/forum-viewable-mat');
+const refreshForumViewableFunction    = require('../sql/functions/refresh-forum-viewable-mat');
+const forumViewableView         = require('../sql/views/forum-viewable');
 const forumPermTable            = require('../sql/tables/forum-permission');
+const updateForumPermTrigger    = require('../sql/triggers/update-forum-permission');
 const indexView                 = require('../sql/views/index-view');
 const forumView                 = require('../sql/views/forum-view');
 const categoryView              = require('../sql/views/category-view');
@@ -90,12 +94,16 @@ const tasks = [
   categoryViewableView,
   forumTable,
   forumPermTable,
+  updateForumPermTrigger,
   distinctReference,
   noncircularReference,
   ancestorForumsFunction,
   descendantForumsFunction,
   insertForumTrigger,
   updateForumTrigger,
+  forumViewableMatTable,
+  refreshForumViewableFunction,
+  forumViewableView,
   topicTable,
   deleteTopicTrigger,
   insertTopicTrigger,
