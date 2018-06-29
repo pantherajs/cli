@@ -13,11 +13,17 @@ BEGIN
   END IF;
 
   INSERT INTO forum_viewable_mat (account_id, forum_id, expiry)
-  SELECT
-    account.id,
-    NEW.id,
-    NEW.created
-  FROM account;
+    SELECT
+      account.id,
+      NEW.id,
+      NEW.created
+    FROM account;
+
+  INSERT INTO forum_permission(forum_id, role_id)
+    SELECT
+      NEW.id,
+      role.id
+    FROM role;
 
   RETURN NEW;
 END;
