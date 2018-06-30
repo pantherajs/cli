@@ -18,6 +18,8 @@ const accountTable              = require('../sql/tables/account');
 const insertAccountTrigger      = require('../sql/triggers/insert-account');
 const accessTokenTable          = require('../sql/tables/access-token');
 const roleTable                 = require('../sql/tables/role');
+const updateRoleTrigger         = require('../sql/triggers/update-role');
+const deleteRoleTrigger         = require('../sql/triggers/delete-role');
 const aliasTable                = require('../sql/tables/alias');
 const aliasStatsMat             = require('../sql/tables/alias-statistics-mat');
 const insertAliasTrigger        = require('../sql/triggers/insert-alias');
@@ -61,6 +63,7 @@ const updateForumPermTrigger    = require('../sql/triggers/update-forum-permissi
 const indexView                 = require('../sql/views/index-view');
 const forumView                 = require('../sql/views/forum-view');
 const categoryView              = require('../sql/views/category-view');
+const seedRoles                 = require('../sql/seed/roles');
 const commitTransaction         = require('../sql/misc/commit-transaction');
 const rollbackTransaction       = require('../sql/misc/rollback-transaction');
 
@@ -81,6 +84,8 @@ const tasks = [
   insertAccountTrigger,
   accessTokenTable,
   roleTable,
+  updateRoleTrigger,
+  deleteRoleTrigger,
   aliasTable,
   insertAliasTrigger,
   updateAliasTrigger,
@@ -124,6 +129,7 @@ const tasks = [
   forumView,
   categoryView,
   indexView,
+  seedRoles,
   commitTransaction,
   rollbackTransaction
 ];
