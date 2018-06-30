@@ -21,7 +21,7 @@ $refresh_forum_statistics_mat$
       ON topic.forum_id = forum.id
     INNER JOIN topic_statistics
       ON topic_statistics.topic_id = topic.id
-    WHERE forum.id IN (SELECT descendant_forums(target_id))
+    WHERE forum.id = target_id
   )
   UPDATE forum_statistics_mat SET
     num_topics      = cte.num_topics,
