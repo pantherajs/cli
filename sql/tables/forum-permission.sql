@@ -1,4 +1,5 @@
 CREATE TABLE IF NOT EXISTS forum_permission (
+  id                      SERIAL  NOT NULL,
   forum_id                INTEGER NOT NULL,
   role_id                 INTEGER NOT NULL,
   can_view                BOOLEAN NOT NULL DEFAULT FALSE,
@@ -10,7 +11,9 @@ CREATE TABLE IF NOT EXISTS forum_permission (
   can_delete_other_topics BOOLEAN NOT NULL DEFAULT FALSE,
   created  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  PRIMARY KEY (forum_id, role_id),
+  PRIMARY KEY (id),
+  CONSTRAINT forum_permission_unique_forum_id_role_id
+    UNIQUE (forum_id, role_id),
   CONSTRAINT forum_permission_foreign_key_forum_id
     FOREIGN KEY (forum_id)
     REFERENCES forum(id),
