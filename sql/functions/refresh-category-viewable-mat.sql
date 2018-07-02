@@ -14,6 +14,7 @@ $refresh_category_viewable_mat$
     INNER JOIN alias
       ON role.id = alias.role_id
     WHERE alias.account_id = target_account_id
+      AND category_permission.category_id = target_category_id
     GROUP BY
       category_permission.category_id
   )
