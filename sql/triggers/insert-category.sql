@@ -9,7 +9,7 @@ BEGIN
       NEW.created
     FROM account;
 
-  INSERT INTO category_permission(category_id, role_id)
+  INSERT INTO category_permission (category_id, role_id)
     SELECT
       NEW.id,
       role.id

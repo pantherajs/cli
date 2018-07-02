@@ -19,7 +19,7 @@ BEGIN
       NEW.created
     FROM account;
 
-  INSERT INTO forum_permission(forum_id, role_id)
+  INSERT INTO forum_permission (forum_id, role_id)
     SELECT
       NEW.id,
       role.id
