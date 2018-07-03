@@ -60,9 +60,7 @@ const refreshForumViewableFunction    = require('../sql/functions/refresh-forum-
 const forumViewableView         = require('../sql/views/forum-viewable');
 const forumPermTable            = require('../sql/tables/forum-permission');
 const updateForumPermTrigger    = require('../sql/triggers/update-forum-permission');
-const indexView                 = require('../sql/views/index-view');
-const forumView                 = require('../sql/views/forum-view');
-const categoryView              = require('../sql/views/category-view');
+const forumViewFunction         = require('../sql/functions/forum-view');
 const seedRoles                 = require('../sql/seed/roles');
 const commitTransaction         = require('../sql/misc/commit-transaction');
 const rollbackTransaction       = require('../sql/misc/rollback-transaction');
@@ -126,9 +124,7 @@ const tasks = [
   forumStatsMatTable,
   refreshForumStatsFunction,
   forumStatsView,
-  forumView,
-  categoryView,
-  indexView,
+  forumViewFunction,
   seedRoles,
   commitTransaction,
   rollbackTransaction
