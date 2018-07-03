@@ -56,23 +56,21 @@ RETURNS TABLE (
     WHERE access_token.account_id IS NULL
       AND access_token.token = target_token
   ), descendant AS (
-    (
-      SELECT
-        forum.id       AS forum_id,
-        forum.sort_key AS forum_sort_key,
-        forum.name     AS forum_name,
-        forum.parent_forum_id,
-        forum_accessible.token,
-        forum_accessible.can_view
-      FROM forum
-      INNER JOIN category_accessible
-        ON forum.category_id = category_accessible.category_id
-      INNER JOIN forum_accessible
-        ON forum.id = forum_accessible.forum_id
-      WHERE forum.id = target_id
-        AND forum_accessible.token = target_token
-      LIMIT 1
-    )
+    SELECT
+      forum.id       AS forum_id,
+      forum.sort_key AS forum_sort_key,
+      forum.name     AS forum_name,
+      forum.parent_forum_id,
+      forum_accessible.token,
+      forum_accessible.can_view
+    FROM forum
+    INNER JOIN category_accessible
+      ON forum.category_id = category_accessible.category_id
+    INNER JOIN forum_accessible
+      ON forum.id = forum_accessible.forum_id
+    WHERE forum.category_id = target_id
+      AND forum.parent_forum_id IS NULL
+      AND forum_accessible.token = target_token
     UNION ALL
     SELECT
       child.id       AS forum_id,
@@ -86,7 +84,8 @@ RETURNS TABLE (
       ON child.id = forum_accessible.forum_id
       AND forum_accessible.can_view = TRUE
     INNER JOIN descendant
-      ON child.parent_forum_id = descendant.forum_id
+      ON child.category_id = target_id
+      AND child.parent_forum_id = descendant.forum_id
       AND forum_accessible.token = descendant.token
   ), forum_agg AS (
     SELECT
@@ -94,12 +93,24 @@ RETURNS TABLE (
       forum.sort_key                       AS forum_sort_key,
       forum.category_id                    AS forum_category_id,
       forum.name                           AS forum_name,
-      SUM(forum_statistics.num_topics)     AS num_topics,
-      SUM(forum_statistics.num_posts)      AS num_posts,
-      MAX(forum_statistics.recent_post_id) AS recent_post_id,
+      SUM(forum_statistics.num_topics) FILTER (
+        WHERE descendants.forum_id IS NOT NULL
+          AND forum.id IN (descendants.forum_id, descendants.parent_forum_id)
+          AND descendants.can_view = TRUE
+      )                                    AS num_topics,
+      SUM(forum_statistics.num_posts) FILTER (
+        WHERE descendants.forum_id IS NOT NULL
+          AND forum.id IN (descendants.forum_id, descendants.parent_forum_id)
+          AND descendants.can_view = TRUE
+      )                                    AS num_posts,
+      MAX(forum_statistics.recent_post_id) FILTER (
+        WHERE descendants.forum_id IS NOT NULL
+          AND forum.id IN (descendants.forum_id, descendants.parent_forum_id)
+          AND descendants.can_view = TRUE
+      )                                    AS recent_post_id,
       COUNT(descendants.*) FILTER (
         WHERE descendants.forum_id IS NOT NULL
-          AND descendants.parent_forum_id = target_id
+          AND descendants.parent_forum_id = forum.id
       )                                    AS num_subforums,
       COALESCE(jsonb_agg(jsonb_build_object(
         'subforum_id',   descendants.forum_id,
@@ -109,7 +120,7 @@ RETURNS TABLE (
           descendants.forum_id ASC)
         FILTER (
           WHERE descendants.forum_id IS NOT NULL
-            AND descendants.parent_forum_id = target_id
+            AND descendants.parent_forum_id = forum.id
             AND descendants.can_view = TRUE
         ),
       '[]'::jsonb)                         AS subforums
@@ -132,7 +143,6 @@ RETURNS TABLE (
       forum.id,
       forum.sort_key,
       forum.name
-    LIMIT 1
   ), forum_result AS (
     SELECT
       forum_agg.forum_id,
