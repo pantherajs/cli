@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/views/category-view.js
+ * @file bin/tasks/sql/triggers/delete-role.js
  */
 'use strict';
 
@@ -9,17 +9,16 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `category_view` view...';
+const title = 'Creating `delete_role` trigger...';
 
 /**
  * @param  {Object} ctx
+ * @param  {Object} task
  * @return {Promise}
  * @private
  */
 const task = ctx => {
-  const user = ctx.env.PANTHERA_API_USER;
-
-  return sqlTask(ctx, 'views/category-view.sql', user);
+  return sqlTask(ctx, 'triggers/delete-role.sql');
 };
 
 /**

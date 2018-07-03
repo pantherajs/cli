@@ -6,7 +6,7 @@ BEGIN
 
   UPDATE forum_statistics_mat SET
     expiry = NEW.created
-  WHERE forum_id IN (SELECT ancestor_forums(NEW.forum_id));
+  WHERE forum_id = NEW.forum_id;
 
   UPDATE alias_statistics_mat SET
     expiry = NEW.created

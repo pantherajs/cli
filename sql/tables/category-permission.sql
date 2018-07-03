@@ -1,10 +1,13 @@
 CREATE TABLE IF NOT EXISTS category_permission (
+  id          SERIAL                   NOT NULL,
   category_id INTEGER                  NOT NULL,
   role_id     INTEGER                  NOT NULL,
   can_view    BOOLEAN                  NOT NULL DEFAULT FALSE,
   created     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  PRIMARY KEY (category_id, role_id),
+  PRIMARY KEY (id),
+  CONSTRAINT category_permission_unique_category_id_role_id
+    UNIQUE (category_id, role_id),
   CONSTRAINT category_permission_foreign_key_category_id
     FOREIGN KEY (category_id)
     REFERENCES category(id),

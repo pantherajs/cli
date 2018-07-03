@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/views/forum-view.js
+ * @file bin/tasks/sql/functions/category-view.js
  */
 'use strict';
 
@@ -9,18 +9,19 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `forum_view` view...';
+const title = 'Creating `category_view` function...';
+
+/**
+ * @type {String}
+ */
+const file = 'functions/category-view.sql';
 
 /**
  * @param  {Object} ctx
  * @return {Promise}
  * @private
  */
-const task = ctx => {
-  const user = ctx.env.PANTHERA_API_USER;
-
-  return sqlTask(ctx, 'views/forum-view.sql', user);
-};
+const task = ctx => sqlTask(ctx, file);
 
 /**
  * A Listr-compatible task object.

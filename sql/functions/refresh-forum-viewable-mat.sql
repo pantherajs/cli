@@ -14,6 +14,7 @@ $refresh_forum_viewable_mat$
     INNER JOIN alias
       ON role.id = alias.role_id
     WHERE alias.account_id = target_account_id
+      AND forum_permission.forum_id = target_forum_id
     GROUP BY
       forum_permission.forum_id
   )

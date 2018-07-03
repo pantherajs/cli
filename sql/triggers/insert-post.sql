@@ -8,14 +8,12 @@ BEGIN
 
   UPDATE forum_statistics_mat SET
     expiry = NEW.created
-  WHERE forum_id IN ((
-    SELECT ancestor_forums((
-      SELECT
-        topic.forum_id
-      FROM topic
-      WHERE topic.id = NEW.topic_id
-    ))
-  ));
+  WHERE forum_id = (
+    SELECT
+      topic.forum_id
+    FROM topic
+    WHERE topic.id = NEW.topic_id
+  );
 
   UPDATE alias_statistics_mat SET
     expiry = NEW.created
