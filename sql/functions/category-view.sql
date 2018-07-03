@@ -134,7 +134,7 @@ RETURNS TABLE (
           can_view
         FROM descendant
       ) AS descendants
-      ON TRUE
+      ON forum.id IN (descendants.forum_id, descendants.parent_forum_id)
     INNER JOIN forum_statistics
       ON descendants.forum_id = forum_statistics.forum_id
     WHERE forum.category_id = target_id
@@ -142,6 +142,7 @@ RETURNS TABLE (
     GROUP BY
       forum.id,
       forum.sort_key,
+      forum.category_id,
       forum.name
   ), forum_result AS (
     SELECT
@@ -200,6 +201,7 @@ RETURNS TABLE (
       category.id,
       category.sort_key,
       category.name
+    LIMIT 1
   ), response (status_code) AS (
     VALUES (200)
   )
