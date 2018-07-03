@@ -61,6 +61,8 @@ const forumViewableView         = require('../sql/views/forum-viewable');
 const forumPermTable            = require('../sql/tables/forum-permission');
 const updateForumPermTrigger    = require('../sql/triggers/update-forum-permission');
 const forumViewFunction         = require('../sql/functions/forum-view');
+const categoryViewFunction      = require('../sql/functions/category-view');
+const indexViewFunction         = require('../sql/functions/index-view');
 const seedRoles                 = require('../sql/seed/roles');
 const commitTransaction         = require('../sql/misc/commit-transaction');
 const rollbackTransaction       = require('../sql/misc/rollback-transaction');
@@ -125,6 +127,8 @@ const tasks = [
   refreshForumStatsFunction,
   forumStatsView,
   forumViewFunction,
+  categoryViewFunction,
+  indexViewFunction,
   seedRoles,
   commitTransaction,
   rollbackTransaction
