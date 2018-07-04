@@ -1,29 +1,23 @@
 CREATE TABLE IF NOT EXISTS category_permission (
-  id          SERIAL                   NOT NULL,
-  category_id INTEGER                  NOT NULL,
-  role_id     INTEGER                  NOT NULL,
-  can_view    BOOLEAN                  NOT NULL DEFAULT FALSE,
-  created     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  modified    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  PRIMARY KEY (id),
-  CONSTRAINT category_permission_unique_category_id_role_id
-    UNIQUE (category_id, role_id),
+  id            SERIAL  NOT NULL,
+  permission_id INTEGER NOT NULL,
+  category_id   INTEGER NOT NULL,
+  CONSTRAINT category_permission_primary_key
+    PRIMARY KEY (id),
+  CONSTRAINT category_permission_foreign_key_permission_id
+    FOREIGN KEY (permission_id)
+    REFERENCES permission(id)
+    ON DELETE CASCADE,
   CONSTRAINT category_permission_foreign_key_category_id
     FOREIGN KEY (category_id)
-    REFERENCES category(id),
-  CONSTRAINT category_permission_foreign_key_role_id
-    FOREIGN KEY (role_id)
-    REFERENCES role(id)
+    REFERENCES category(id)
+    ON DELETE CASCADE
 );
 
-CREATE INDEX category_permission_index_forum_id
+CREATE UNIQUE INDEX category_permission_unique_index_permission_id
+  ON category_permission(permission_id);
+CREATE INDEX category_permission_index_category_id
   ON category_permission(category_id);
-CREATE INDEX category_permission_index_role_id
-  ON category_permission(role_id);
-CREATE INDEX category_permission_index_can_view
-  ON category_permission(can_view);
 
-CREATE TRIGGER update_category_permission_modified BEFORE UPDATE ON category_permission
-  FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON category_permission TO %I;
+GRANT USAGE, SELECT ON SEQUENCE category_permission_id_seq TO %I;
+GRANT SELECT, INSERT ON category_permission TO %I;

@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/tables/category-permission.js
+ * @file bin/tasks/sql/triggers/insert-role.js
  */
 'use strict';
 
@@ -9,17 +9,16 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `category_permission` table...';
+const title = 'Creating `insert_role` trigger...';
 
 /**
  * @param  {Object} ctx
+ * @param  {Object} task
  * @return {Promise}
  * @private
  */
 const task = ctx => {
-  const user = ctx.env.PANTHERA_API_USER;
-
-  return sqlTask(ctx, 'tables/category-permission.sql', user, user);
+  return sqlTask(ctx, 'triggers/insert-role.sql');
 };
 
 /**

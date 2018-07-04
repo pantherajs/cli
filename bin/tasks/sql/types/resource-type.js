@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/tables/category-permission.js
+ * @file bin/tasks/sql/types/resource-type.js
  */
 'use strict';
 
@@ -9,7 +9,7 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `category_permission` table...';
+const title = 'Creating `resource_type` type...';
 
 /**
  * @param  {Object} ctx
@@ -17,9 +17,7 @@ const title = 'Creating `category_permission` table...';
  * @private
  */
 const task = ctx => {
-  const user = ctx.env.PANTHERA_API_USER;
-
-  return sqlTask(ctx, 'tables/category-permission.sql', user, user);
+  return sqlTask(ctx, 'types/resource-type.sql');
 };
 
 /**

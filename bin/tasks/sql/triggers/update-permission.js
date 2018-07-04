@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/triggers/update-category-permission.js
+ * @file bin/tasks/sql/triggers/update-permission.js
  */
 'use strict';
 
@@ -9,7 +9,7 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `update_category_permission` trigger...';
+const title = 'Creating `update_permission` trigger...';
 
 /**
  * @param  {Object} ctx
@@ -18,7 +18,7 @@ const title = 'Creating `update_category_permission` trigger...';
  * @private
  */
 const task = ctx => {
-  return sqlTask(ctx, 'triggers/update-category-permission.sql');
+  return sqlTask(ctx, 'triggers/update-permission.sql');
 };
 
 /**

@@ -11,14 +11,14 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const forum = proxyquire('../../../../bin/tasks/sql/tables/forum-permission', stubs);
+const permission = proxyquire('../../../../bin/tasks/sql/tables/forum-permission', stubs);
 
-test('should create `forum` table', async t => {
+test('should create `forum_permission` table', async t => {
   const context = {
     env: {
       PANTHERA_API_USER: 'user'
     }
   };
 
-  await t.notThrows(() => forum.task(context));
+  await t.notThrows(() => permission.task(context));
 });

@@ -1,5 +1,5 @@
 /**
- * @file test/tasks/sql/triggers/update-category-permission.spec.js
+ * @file test/tasks/sql/triggers/update-permission.spec.js
  */
 'use strict';
 
@@ -11,8 +11,8 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const update = proxyquire('../../../../bin/tasks/sql/triggers/update-category-permission', stubs);
+const update = proxyquire('../../../../bin/tasks/sql/triggers/update-permission', stubs);
 
-test('should create `update_category_permission` trigger', async t => {
+test('should create `update_permission` trigger', async t => {
   await t.notThrows(() => update.task({}));
 });

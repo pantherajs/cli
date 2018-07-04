@@ -19,7 +19,7 @@ const title = 'Creating `forum_permission` table...';
 const task = ctx => {
   const user = ctx.env.PANTHERA_API_USER;
 
-  return sqlTask(ctx, 'tables/forum-permission.sql', user);
+  return sqlTask(ctx, 'tables/forum-permission.sql', user, user);
 };
 
 /**

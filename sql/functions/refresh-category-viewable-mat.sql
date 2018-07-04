@@ -6,11 +6,13 @@ RETURNS category_viewable_mat AS
 $refresh_category_viewable_mat$
   WITH cte AS (
     SELECT
-      category_permission.category_id                        AS category_id,
-      COALESCE(BOOL_OR(category_permission.can_view), FALSE) AS can_view
+      category_permission.category_id            AS category_id,
+      COALESCE(BOOL_OR(permission.state), FALSE) AS can_view
     FROM category_permission
+    INNER JOIN permission
+      ON category_permission.permission_id = permission.id
     INNER JOIN role
-      ON category_permission.role_id = role.id
+      ON permission.role_id = role.id
     INNER JOIN alias
       ON role.id = alias.role_id
     WHERE alias.account_id = target_account_id

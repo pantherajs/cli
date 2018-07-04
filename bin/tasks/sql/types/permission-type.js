@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/triggers/update-forum-permission.js
+ * @file bin/tasks/sql/types/permission-type.js
  */
 'use strict';
 
@@ -9,16 +9,15 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `update_forum_permission` trigger...';
+const title = 'Creating `permission_type` type...';
 
 /**
  * @param  {Object} ctx
- * @param  {Object} task
  * @return {Promise}
  * @private
  */
 const task = ctx => {
-  return sqlTask(ctx, 'triggers/update-forum-permission.sql');
+  return sqlTask(ctx, 'types/permission-type.sql');
 };
 
 /**

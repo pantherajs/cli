@@ -1,5 +1,5 @@
 /**
- * @file test/tasks/sql/tables/category-permission.spec.js
+ * @file test/tasks/sql/tables/permission.spec.js
  */
 'use strict';
 
@@ -11,9 +11,9 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const permission = proxyquire('../../../../bin/tasks/sql/tables/category-permission', stubs);
+const permission = proxyquire('../../../../bin/tasks/sql/tables/permission', stubs);
 
-test('should create `category_permission` table', async t => {
+test('should create `permission` table', async t => {
   const context = {
     env: {
       PANTHERA_API_USER: 'user'
