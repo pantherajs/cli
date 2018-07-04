@@ -8,9 +8,9 @@ BEGIN
         expiry = '-infinity'
       WHERE category_viewable_mat.category_id = (
         SELECT
-          permission_category.category_id
-        FROM permission_category
-        WHERE permission_category.permission_id = NEW.id
+          category_permission.category_id
+        FROM category_permission
+        WHERE category_permission.permission_id = NEW.id
       )
         AND NEW.modified <= expiry;
     END IF;
@@ -20,9 +20,9 @@ BEGIN
         expiry = '-infinity'
       WHERE forum_viewable_mat.forum_id = (
         SELECT
-          permission_forum.forum_id
-        FROM permission_forum
-        WHERE permission_forum.permission_id = NEW.id
+          forum_permission.forum_id
+        FROM forum_permission
+        WHERE forum_permission.permission_id = NEW.id
       )
         AND NEW.modified <= expiry;
     END IF;

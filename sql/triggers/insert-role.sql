@@ -71,7 +71,7 @@ BEGIN
       'ADMIN_PANEL' AS resource_type,
       FALSE         AS state;
 
-  INSERT INTO permission_category (permission_id, category_id)
+  INSERT INTO category_permission (permission_id, category_id)
     SELECT
       permission.id,
       category.id
@@ -92,7 +92,7 @@ BEGIN
     ) AS category
       ON permission.row_number = category.row_number;
 
-  INSERT INTO permission_forum (permission_id, forum_id)
+  INSERT INTO forum_permission (permission_id, forum_id)
     SELECT
       permission.id,
       forum.id

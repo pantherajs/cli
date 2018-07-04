@@ -6,19 +6,19 @@ RETURNS forum_viewable_mat AS
 $refresh_forum_viewable_mat$
   WITH cte AS (
     SELECT
-      permission_forum.forum_id                  AS forum_id,
+      forum_permission.forum_id                  AS forum_id,
       COALESCE(BOOL_OR(permission.state), FALSE) AS can_view
-    FROM permission_forum
+    FROM forum_permission
     INNER JOIN permission
-      ON permission_forum.permission_id = permission.id
+      ON forum_permission.permission_id = permission.id
     INNER JOIN role
       ON permission.role_id = role.id
     INNER JOIN alias
       ON role.id = alias.role_id
     WHERE alias.account_id = target_account_id
-      AND permission_forum.forum_id = target_forum_id
+      AND forum_permission.forum_id = target_forum_id
     GROUP BY
-      permission_forum.forum_id
+      forum_permission.forum_id
   )
   UPDATE forum_viewable_mat SET
     can_view = cte.can_view,

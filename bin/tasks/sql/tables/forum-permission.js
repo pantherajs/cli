@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/tables/permission-category.js
+ * @file bin/tasks/sql/tables/forum-permission.js
  */
 'use strict';
 
@@ -9,7 +9,7 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `permission_category` table...';
+const title = 'Creating `forum_permission` table...';
 
 /**
  * @param  {Object} ctx
@@ -19,7 +19,7 @@ const title = 'Creating `permission_category` table...';
 const task = ctx => {
   const user = ctx.env.PANTHERA_API_USER;
 
-  return sqlTask(ctx, 'tables/permission-category.sql', user, user);
+  return sqlTask(ctx, 'tables/forum-permission.sql', user, user);
 };
 
 /**

@@ -22,7 +22,7 @@ RETURNS TABLE (
     UNION ALL
     SELECT
       access_token.token,
-      permission_category.category_id,
+      category_permission.category_id,
       permission.state AS can_view
     FROM access_token
     INNER JOIN role
@@ -30,11 +30,11 @@ RETURNS TABLE (
     INNER JOIN permission
       ON role.id = permission.role_id
       AND permission.state = TRUE
-    INNER JOIN permission_category
-      ON permission.id = permission_category.permission_id
+    INNER JOIN category_permission
+      ON permission.id = category_permission.permission_id
     WHERE access_token.account_id IS NULL
       AND access_token.token = target_token
-      AND permission_category.category_id = (
+      AND category_permission.category_id = (
         SELECT forum.category_id FROM forum WHERE forum.id = target_id
       )
   ), forum_accessible AS (
@@ -51,7 +51,7 @@ RETURNS TABLE (
     UNION ALL
     SELECT
       access_token.token,
-      permission_forum.forum_id,
+      forum_permission.forum_id,
       permission.state AS can_view
     FROM access_token
     INNER JOIN role
@@ -59,8 +59,8 @@ RETURNS TABLE (
     INNER JOIN permission
       ON role.id = permission.role_id
       AND permission.state = TRUE
-    INNER JOIN permission_forum
-      ON permission.id = permission_forum.permission_id
+    INNER JOIN forum_permission
+      ON permission.id = forum_permission.permission_id
     WHERE access_token.account_id IS NULL
       AND access_token.token = target_token
   ), descendant AS (

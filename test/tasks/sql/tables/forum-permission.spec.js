@@ -1,5 +1,5 @@
 /**
- * @file test/tasks/sql/tables/permission-category.spec.js
+ * @file test/tasks/sql/tables/forum-permission.spec.js
  */
 'use strict';
 
@@ -11,14 +11,14 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const permissionCategory = proxyquire('../../../../bin/tasks/sql/tables/permission-category', stubs);
+const permission = proxyquire('../../../../bin/tasks/sql/tables/forum-permission', stubs);
 
-test('should create `permission_category` table', async t => {
+test('should create `forum_permission` table', async t => {
   const context = {
     env: {
       PANTHERA_API_USER: 'user'
     }
   };
 
-  await t.notThrows(() => permissionCategory.task(context));
+  await t.notThrows(() => permission.task(context));
 });

@@ -37,8 +37,8 @@ const distinctReference         = require('../sql/triggers/distinct-parent-forum
 const noncircularReference      = require('../sql/triggers/noncircular-parent-forum-reference');
 const permissionTable           = require('../sql/tables/permission');
 const updatePermissionTrigger   = require('../sql/triggers/update-permission');
-const permissionCategoryTable   = require('../sql/tables/permission-category');
-const permissionForumTable      = require('../sql/tables/permission-forum');
+const categoryPermissionTable   = require('../sql/tables/category-permission');
+const forumPermissionTable      = require('../sql/tables/forum-permission');
 const insertRoleTrigger         = require('../sql/triggers/insert-role');
 const topicTable                = require('../sql/tables/topic');
 const postTable                 = require('../sql/tables/post');
@@ -97,13 +97,13 @@ const tasks = [
   deleteAliasTrigger,
   permissionTable,
   categoryTable,
-  permissionCategoryTable,
+  categoryPermissionTable,
   insertCategoryTrigger,
   categoryViewableMatTable,
   refreshCategoryViewableFunction,
   categoryViewableView,
   forumTable,
-  permissionForumTable,
+  forumPermissionTable,
   insertRoleTrigger,
   updatePermissionTrigger,
   distinctReference,

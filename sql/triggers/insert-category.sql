@@ -17,12 +17,12 @@ BEGIN
       FALSE      AS state
     FROM role;
 
-  INSERT INTO permission_category (permission_id, category_id)
+  INSERT INTO category_permission (permission_id, category_id)
     SELECT
       permission.id AS permission_id,
       NEW.id        AS category_id
     FROM permission
-    WHERE permission.id NOT IN (SELECT permission_id FROM permission_category)
+    WHERE permission.id NOT IN (SELECT permission_id FROM category_permission)
       AND permission.resource_type = 'CATEGORY'
       AND permission.permission_type = 'READ';
 

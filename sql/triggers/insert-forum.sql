@@ -27,12 +27,12 @@ BEGIN
       FALSE   AS state
     FROM role;
 
-  INSERT INTO permission_forum (permission_id, forum_id)
+  INSERT INTO forum_permission (permission_id, forum_id)
     SELECT
       permission.id AS permission_id,
       NEW.id        AS forum_id
     FROM permission
-    WHERE permission.id NOT IN (SELECT permission_id FROM permission_forum)
+    WHERE permission.id NOT IN (SELECT permission_id FROM forum_permission)
       AND permission.resource_type = 'FORUM'
       AND permission.permission_type = 'READ';
 
