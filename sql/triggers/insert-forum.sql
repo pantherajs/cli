@@ -19,11 +19,22 @@ BEGIN
       NEW.created
     FROM account;
 
-  INSERT INTO forum_permission (forum_id, role_id)
+  INSERT INTO permission (role_id, permission_type, resource_type, state)
     SELECT
-      NEW.id,
-      role.id
+      role.id AS role_id,
+      'READ'  AS permission_type,
+      'FORUM' AS resource_type,
+      FALSE   AS state
     FROM role;
+
+  INSERT INTO permission_forum (permission_id, forum_id)
+    SELECT
+      permission.id AS permission_id,
+      NEW.id        AS forum_id
+    FROM permission
+    WHERE permission.id NOT IN (SELECT permission_id FROM permission_forum)
+      AND permission.resource_type = 'FORUM'
+      AND permission.permission_type = 'READ';
 
   RETURN NEW;
 END;
