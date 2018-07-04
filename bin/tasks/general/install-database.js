@@ -9,6 +9,8 @@ const requireAll = require('require-all');
 
 const sql = requireAll(path.join(__dirname, '../sql'));
 
+/* eslint dot-notation: "off" */
+
 /**
  * @type {Array.<Object>}
  */
