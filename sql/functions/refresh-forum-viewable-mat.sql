@@ -7,7 +7,7 @@ $refresh_forum_viewable_mat$
   WITH cte AS (
     SELECT
       forum_permission.forum_id                  AS forum_id,
-      COALESCE(BOOL_OR(permission.state), FALSE) AS can_view
+      COALESCE(BOOL_OR(permission.enabled), FALSE) AS can_view
     FROM forum_permission
     INNER JOIN permission
       ON forum_permission.permission_id = permission.id

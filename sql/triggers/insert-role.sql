@@ -2,12 +2,12 @@ CREATE OR REPLACE FUNCTION insert_role()
 RETURNS TRIGGER AS
 $insert_role$
 BEGIN
-  INSERT INTO permission (role_id, permission_type, resource_type, state)
+  INSERT INTO permission (role_id, permission_type, resource_type, enabled)
     SELECT
       NEW.id          AS role_id,
       permission.type AS permission_type,
       resource.type   AS resource_type,
-      FALSE           AS state
+      FALSE           AS enabled
     FROM (
       SELECT
         type
@@ -31,7 +31,7 @@ BEGIN
       NEW.id          AS role_id,
       permission.type AS permission_type,
       resource.type   AS resource_type,
-      FALSE           AS state
+      FALSE           AS enabled
     FROM (
       SELECT
         type
@@ -50,26 +50,27 @@ BEGIN
       ) AS types
       WHERE types.type IN ('TOPIC', 'POST')
     ) AS resource
+    CROSS JOIN forum
     UNION ALL
     SELECT
       NEW.id     AS role_id,
       'READ'     AS permission_type,
       'CATEGORY' AS resource_type,
-      FALSE      AS state
+      FALSE      AS enabled
     FROM category
     UNION ALL
     SELECT
       NEW.id  AS role_id,
       'READ'  AS permission_type,
       'FORUM' AS resource_type,
-      FALSE   AS state
+      FALSE   AS enabled
     FROM forum
     UNION ALL
     SELECT
       NEW.id        AS role_id,
       'ACCESS'      AS permission_type,
       'ADMIN_PANEL' AS resource_type,
-      FALSE         AS state;
+      FALSE         AS enabled;
 
   INSERT INTO category_permission (permission_id, category_id)
     SELECT
@@ -94,8 +95,8 @@ BEGIN
 
   INSERT INTO forum_permission (permission_id, forum_id)
     SELECT
-      permission.id,
-      forum.id
+      permission.id AS permission_id,
+      forum.id      AS forum_id
     FROM (
       SELECT
         permission.id,
@@ -103,6 +104,26 @@ BEGIN
       FROM permission
       WHERE resource_type = 'FORUM'
         AND permission_type = 'READ'
+        AND role_id = NEW.id
+    ) AS permission
+    INNER JOIN (
+      SELECT
+        forum.id,
+        row_number() OVER () AS row_number
+      FROM forum
+    ) AS forum
+      ON permission.row_number = forum.row_number
+    UNION ALL
+    SELECT
+      permission.id AS permission_id,
+      forum.id      AS forum_id
+    FROM (
+      SELECT
+        permission.id,
+        row_number() OVER () AS row_number
+      FROM permission
+      WHERE resource_type IN ('TOPIC', 'POST')
+        AND permission_type IN ('CREATE', 'UPDATE', 'UPDATE_OWN', 'DELETE', 'DELETE_OWN')
         AND role_id = NEW.id
     ) AS permission
     INNER JOIN (

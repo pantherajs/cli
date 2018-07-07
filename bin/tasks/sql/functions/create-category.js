@@ -1,5 +1,5 @@
 /**
- * @file bin/tasks/sql/triggers/update-forum.js
+ * @file bin/tasks/sql/functions/create-category.js
  */
 'use strict';
 
@@ -9,17 +9,19 @@ const sqlTask = require('../../../utils/sql-task');
 /**
  * @type {String}
  */
-const title = 'Creating `update_forum` trigger...';
+const title = 'Creating `create_category` function...';
+
+/**
+ * @type {String}
+ */
+const file = 'functions/create-category.sql';
 
 /**
  * @param  {Object} ctx
- * @param  {Object} task
  * @return {Promise}
  * @private
  */
-const task = ctx => {
-  return sqlTask(ctx, 'triggers/update-forum.sql');
-};
+const task = ctx => sqlTask(ctx, file);
 
 /**
  * A Listr-compatible task object.

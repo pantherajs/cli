@@ -9,12 +9,12 @@ BEGIN
       NEW.created
     FROM account;
 
-  INSERT INTO permission (role_id, permission_type, resource_type, state)
+  INSERT INTO permission (role_id, permission_type, resource_type, enabled)
     SELECT
       role.id    AS role_id,
       'READ'     AS permission_type,
       'CATEGORY' AS resource_type,
-      FALSE      AS state
+      FALSE      AS enabled
     FROM role;
 
   INSERT INTO category_permission (permission_id, category_id)
