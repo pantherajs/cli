@@ -2,12 +2,12 @@ CREATE OR REPLACE FUNCTION insert_role()
 RETURNS TRIGGER AS
 $insert_role$
 BEGIN
-  INSERT INTO permission (role_id, permission_type, resource_type, state)
+  INSERT INTO permission (role_id, permission_type, resource_type, enabled)
     SELECT
       NEW.id          AS role_id,
       permission.type AS permission_type,
       resource.type   AS resource_type,
-      FALSE           AS state
+      FALSE           AS enabled
     FROM (
       SELECT
         type
@@ -31,7 +31,7 @@ BEGIN
       NEW.id          AS role_id,
       permission.type AS permission_type,
       resource.type   AS resource_type,
-      FALSE           AS state
+      FALSE           AS enabled
     FROM (
       SELECT
         type
@@ -56,21 +56,21 @@ BEGIN
       NEW.id     AS role_id,
       'READ'     AS permission_type,
       'CATEGORY' AS resource_type,
-      FALSE      AS state
+      FALSE      AS enabled
     FROM category
     UNION ALL
     SELECT
       NEW.id  AS role_id,
       'READ'  AS permission_type,
       'FORUM' AS resource_type,
-      FALSE   AS state
+      FALSE   AS enabled
     FROM forum
     UNION ALL
     SELECT
       NEW.id        AS role_id,
       'ACCESS'      AS permission_type,
       'ADMIN_PANEL' AS resource_type,
-      FALSE         AS state;
+      FALSE         AS enabled;
 
   INSERT INTO category_permission (permission_id, category_id)
     SELECT

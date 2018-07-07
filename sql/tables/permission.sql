@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS permission (
   role_id         INTEGER                  NOT NULL,
   permission_type PERMISSION_TYPE          NOT NULL,
   resource_type   RESOURCE_TYPE            NOT NULL,
-  state           BOOLEAN                  NOT NULL DEFAULT FALSE,
+  enabled         BOOLEAN                  NOT NULL DEFAULT FALSE,
   created         TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified        TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   CONSTRAINT permission_primary_key

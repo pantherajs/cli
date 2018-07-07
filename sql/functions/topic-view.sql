@@ -26,13 +26,13 @@ RETURNS TABLE (
     SELECT
       access_token.token,
       category_permission.category_id,
-      permission.state AS can_view
+      permission.enabled AS can_view
     FROM access_token
     INNER JOIN role
       ON role.name = 'Guest'
     INNER JOIN permission
       ON role.id = permission.role_id
-      AND permission.state = TRUE
+      AND permission.enabled = TRUE
     INNER JOIN category_permission
       ON permission.id = category_permission.permission_id
     WHERE access_token.account_id IS NULL
@@ -60,13 +60,13 @@ RETURNS TABLE (
     SELECT
       access_token.token,
       forum_permission.forum_id,
-      permission.state AS can_view
+      permission.enabled AS can_view
     FROM access_token
     INNER JOIN role
       ON role.name = 'Guest'
     INNER JOIN permission
       ON role.id = permission.role_id
-      AND permission.state = TRUE
+      AND permission.enabled = TRUE
     INNER JOIN forum_permission
       ON permission.id = forum_permission.permission_id
     WHERE access_token.account_id IS NULL

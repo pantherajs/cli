@@ -16,12 +16,12 @@ RETURNS TABLE (
       ON alias.role_id = can_access_admin_panel.role_id
       AND can_access_admin_panel.permission_type = 'ACCESS'
       AND can_access_admin_panel.resource_type = 'ADMIN_PANEL'
-      AND can_access_admin_panel.state = TRUE
+      AND can_access_admin_panel.enabled = TRUE
     INNER JOIN permission AS can_create_category
       ON alias.role_id = can_create_category.role_id
       AND can_create_category.permission_type = 'CREATE'
       AND can_create_category.resource_type = 'CATEGORY'
-      AND can_create_category.state = TRUE
+      AND can_create_category.enabled = TRUE
     WHERE access_token.token = token
     LIMIT 1
   ), insert_category AS (

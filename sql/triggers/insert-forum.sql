@@ -17,19 +17,19 @@ BEGIN
       NEW.created
     FROM account;
 
-  INSERT INTO permission (role_id, permission_type, resource_type, state)
+  INSERT INTO permission (role_id, permission_type, resource_type, enabled)
     SELECT
       role.id AS role_id,
       'READ'  AS permission_type,
       'FORUM' AS resource_type,
-      FALSE   AS state
+      FALSE   AS enabled
     FROM role
     UNION ALL
     SELECT
       role.id         AS role_id,
       permission.type AS permission_type,
       resource.type   AS resource_type,
-      FALSE           AS state
+      FALSE           AS enabled
     FROM role
     INNER JOIN (
       SELECT

@@ -7,7 +7,7 @@ $refresh_category_viewable_mat$
   WITH cte AS (
     SELECT
       category_permission.category_id            AS category_id,
-      COALESCE(BOOL_OR(permission.state), FALSE) AS can_view
+      COALESCE(BOOL_OR(permission.enabled), FALSE) AS can_view
     FROM category_permission
     INNER JOIN permission
       ON category_permission.permission_id = permission.id

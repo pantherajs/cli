@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION update_permission()
 RETURNS TRIGGER AS
 $update_permission$
 BEGIN
-  IF (NEW.permission_type = 'READ' AND OLD.state <> NEW.state) THEN
+  IF (NEW.permission_type = 'READ' AND OLD.enabled <> NEW.enabled) THEN
     IF (NEW.resource_type = 'CATEGORY') THEN
       UPDATE category_viewable_mat SET
         expiry = '-infinity'

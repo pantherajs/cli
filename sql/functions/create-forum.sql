@@ -21,12 +21,12 @@ CREATE OR REPLACE FUNCTION create_forum(
       ON alias.role_id = can_access_admin_panel.role_id
       AND can_access_admin_panel.permission_type = 'ACCESS'
       AND can_access_admin_panel.resource_type = 'ADMIN_PANEL'
-      AND can_access_admin_panel.state = TRUE
+      AND can_access_admin_panel.enabled = TRUE
     INNER JOIN permission AS can_create_forum
       ON alias.role_id = can_create_forum.role_id
       AND can_create_forum.permission_type = 'CREATE'
       AND can_create_forum.resource_type = 'FORUM'
-      AND can_create_forum.state = TRUE
+      AND can_create_forum.enabled = TRUE
     WHERE access_token.token = token
     LIMIT 1
   ), insert_forum AS (

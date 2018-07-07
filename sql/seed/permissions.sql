@@ -1,6 +1,6 @@
 WITH cte AS (
   SELECT
-    TRUE          AS state,
+    TRUE          AS enabled,
     permission.id AS permission_id
   FROM role
   INNER JOIN permission
@@ -8,13 +8,13 @@ WITH cte AS (
   WHERE role.name = 'Administrator'
 )
 UPDATE permission SET
-  state = cte.state
+  enabled = cte.enabled
 FROM cte
 WHERE permission.id = cte.permission_id;
 
 WITH cte AS (
   SELECT
-    TRUE          AS state,
+    TRUE          AS enabled,
     permission.id AS permission_id
   FROM role
   INNER JOIN permission
@@ -24,6 +24,6 @@ WITH cte AS (
     AND permission.resource_type = 'ACCOUNT'
 )
 UPDATE permission SET
-  state = cte.state
+  enabled = cte.enabled
   FROM cte
   WHERE permission.id = cte.permission_id;
