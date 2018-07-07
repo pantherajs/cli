@@ -7,9 +7,7 @@ BEGIN
   IF (NEW.parent_forum_id IS NOT NULL) THEN
     UPDATE forum_statistics_mat SET
       expiry = NEW.created
-    WHERE forum_id IN ((
-      SELECT ancestor_forums(NEW.parent_forum_id)
-    ));
+    WHERE forum_id = NEW.id;
   END IF;
 
   INSERT INTO forum_viewable_mat (account_id, forum_id, expiry)
@@ -25,7 +23,34 @@ BEGIN
       'READ'  AS permission_type,
       'FORUM' AS resource_type,
       FALSE   AS state
-    FROM role;
+    FROM role
+    UNION ALL
+    SELECT
+      role.id         AS role_id,
+      permission.type AS permission_type,
+      resource.type   AS resource_type,
+      FALSE           AS state
+    FROM role
+    INNER JOIN (
+      SELECT
+        type
+      FROM (
+        SELECT
+          unnest(enum_range(NULL::permission_type)) AS type
+      ) AS types
+      WHERE types.type NOT IN ('ACCESS', 'READ')
+    ) AS permission
+    CROSS JOIN (
+      SELECT
+        type
+      FROM (
+        SELECT
+          unnest(enum_range(NULL::resource_type)) AS type
+      ) AS types
+      WHERE types.type IN ('TOPIC', 'POST')
+    ) AS resource
+    CROSS JOIN forum
+      ON forum.id = NEW.id;
 
   INSERT INTO forum_permission (permission_id, forum_id)
     SELECT
@@ -34,7 +59,15 @@ BEGIN
     FROM permission
     WHERE permission.id NOT IN (SELECT permission_id FROM forum_permission)
       AND permission.resource_type = 'FORUM'
-      AND permission.permission_type = 'READ';
+      AND permission.permission_type = 'READ'
+    UNION ALL
+    SELECT
+      permission.id AS permission_id,
+      NEW.id        AS forum_id
+    FROM permission
+    WHERE permission.id NOT IN (SELECT permission_id FROM forum_permission)
+      AND permission.resource_type IN ('TOPIC', 'POST')
+      AND permission.permission_type IN ('CREATE', 'UPDATE', 'UPDATE_OWN', 'DELETE', 'DELETE_OWN');
 
   RETURN NEW;
 END;
