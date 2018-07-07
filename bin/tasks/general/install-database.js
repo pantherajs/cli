@@ -78,6 +78,8 @@ const tasks = [
   sql.functions['index-view'],
   sql.functions['create-forum'],
   sql.functions['create-category'],
+  sql.functions['update-category'],
+  sql.functions['delete-category'],
   sql.seed['roles'],
   sql.seed['permissions'],
   sql.misc['commit-transaction'],
