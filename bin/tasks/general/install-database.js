@@ -56,7 +56,6 @@ const tasks = [
   sql.triggers['distinct-parent-forum-reference'],
   sql.triggers['noncircular-parent-forum-reference'],
   sql.triggers['insert-forum'],
-  sql.triggers['update-forum'],
   sql.triggers['insert-topic'],
   sql.triggers['update-topic'],
   sql.triggers['delete-topic'],
@@ -73,10 +72,14 @@ const tasks = [
   sql.views['topic-statistics'],
   sql.functions['refresh-forum-statistics-mat'],
   sql.views['forum-statistics'],
+  sql.functions['topic-view'],
   sql.functions['forum-view'],
   sql.functions['category-view'],
   sql.functions['index-view'],
+  sql.functions['create-forum'],
+  sql.functions['create-category'],
   sql.seed['roles'],
+  sql.seed['permissions'],
   sql.misc['commit-transaction'],
   sql.misc['rollback-transaction']
 ];
