@@ -50,6 +50,7 @@ BEGIN
       ) AS types
       WHERE types.type IN ('TOPIC', 'POST')
     ) AS resource
+    CROSS JOIN forum
     UNION ALL
     SELECT
       NEW.id     AS role_id,
@@ -94,8 +95,8 @@ BEGIN
 
   INSERT INTO forum_permission (permission_id, forum_id)
     SELECT
-      permission.id,
-      forum.id
+      permission.id AS permission_id,
+      forum.id      AS forum_id
     FROM (
       SELECT
         permission.id,
@@ -103,6 +104,26 @@ BEGIN
       FROM permission
       WHERE resource_type = 'FORUM'
         AND permission_type = 'READ'
+        AND role_id = NEW.id
+    ) AS permission
+    INNER JOIN (
+      SELECT
+        forum.id,
+        row_number() OVER () AS row_number
+      FROM forum
+    ) AS forum
+      ON permission.row_number = forum.row_number
+    UNION ALL
+    SELECT
+      permission.id AS permission_id,
+      forum.id      AS forum_id
+    FROM (
+      SELECT
+        permission.id,
+        row_number() OVER () AS row_number
+      FROM permission
+      WHERE resource_type IN ('TOPIC', 'POST')
+        AND permission_type IN ('CREATE', 'UPDATE', 'UPDATE_OWN', 'DELETE', 'DELETE_OWN')
         AND role_id = NEW.id
     ) AS permission
     INNER JOIN (
