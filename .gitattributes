@@ -1,0 +1,3 @@
+*.js linguist-detectable=true
+*.sql linguist-detectable=true
+*.spec.js linguist-detectable=false
