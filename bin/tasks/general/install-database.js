@@ -76,6 +76,7 @@ const tasks = [
   sql.functions['forum-view'],
   sql.functions['category-view'],
   sql.functions['index-view'],
+  sql.functions['create-topic'],
   sql.functions['create-forum'],
   sql.functions['update-forum'],
   sql.functions['delete-forum'],
