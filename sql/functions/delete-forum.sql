@@ -1,10 +1,10 @@
-CREATE OR REPLACE FUNCTION delete_forum(forum_id INTEGER, token UUID)
+CREATE OR REPLACE FUNCTION delete_forum(requested_id INTEGER, client_token UUID)
 RETURNS TABLE (
   status_code INTEGER
 ) AS $delete_forum$
   WITH authorized_user AS (
     SELECT
-      forum_id
+      requested_id AS forum_id
     FROM account
     INNER JOIN access_token
       ON account.id = access_token.account_id
@@ -21,7 +21,7 @@ RETURNS TABLE (
       AND can_delete_forum.permission_type = 'DELETE'
       AND can_delete_forum.resource_type = 'FORUM'
       AND can_delete_forum.enabled = TRUE
-    WHERE access_token.token = token
+    WHERE access_token.token = client_token
     LIMIT 1
   ), delete_forum AS (
     DELETE FROM forum

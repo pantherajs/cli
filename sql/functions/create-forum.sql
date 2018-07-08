@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION create_forum(
   forum_parent_forum_id INTEGER,
   forum_name            VARCHAR,
   forum_sort_key        INTEGER,
-  token                 UUID
+  client_token          UUID
 ) RETURNS TABLE (
   status_code INTEGER,
   json_data   JSONB
@@ -27,7 +27,7 @@ CREATE OR REPLACE FUNCTION create_forum(
       AND can_create_forum.permission_type = 'CREATE'
       AND can_create_forum.resource_type = 'FORUM'
       AND can_create_forum.enabled = TRUE
-    WHERE access_token.token = token
+    WHERE access_token.token = client_token
     LIMIT 1
   ), insert_forum AS (
     INSERT INTO forum (category_id, parent_forum_id, name, sort_key)

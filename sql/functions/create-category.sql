@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION create_category(category_name VARCHAR, token UUID)
+CREATE OR REPLACE FUNCTION create_category(category_name VARCHAR, client_token UUID)
 RETURNS TABLE (
   status_code INTEGER,
   json_data   JSONB
@@ -22,7 +22,7 @@ RETURNS TABLE (
       AND can_create_category.permission_type = 'CREATE'
       AND can_create_category.resource_type = 'CATEGORY'
       AND can_create_category.enabled = TRUE
-    WHERE access_token.token = token
+    WHERE access_token.token = client_token
     LIMIT 1
   ), insert_category AS (
     INSERT INTO category (name)

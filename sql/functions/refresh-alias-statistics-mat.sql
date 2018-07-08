@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION refresh_alias_statistics_mat(target_id INTEGER)
+CREATE OR REPLACE FUNCTION refresh_alias_statistics_mat(requested_id INTEGER)
 RETURNS alias_statistics_mat AS
 $refresh_alias_statistics_mat$
   WITH topic AS (
@@ -8,7 +8,7 @@ $refresh_alias_statistics_mat$
         0
       ) AS num_topics
     FROM topic
-    WHERE topic.author_alias_id = target_id
+    WHERE topic.author_alias_id = requested_id
   ), post AS (
     SELECT
       COALESCE(
@@ -21,7 +21,7 @@ $refresh_alias_statistics_mat$
         'infinity'::TIMESTAMPTZ
       )            AS expiry
     FROM post
-    WHERE post.author_alias_id = target_id
+    WHERE post.author_alias_id = requested_id
   )
   UPDATE alias_statistics_mat SET
     num_topics     = topic.num_topics,
@@ -30,7 +30,7 @@ $refresh_alias_statistics_mat$
     expiry         = post.expiry
   FROM topic
   CROSS JOIN post
-  WHERE alias_statistics_mat.alias_id = target_id
+  WHERE alias_statistics_mat.alias_id = requested_id
   RETURNING alias_statistics_mat.*;
 $refresh_alias_statistics_mat$
   VOLATILE

@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION refresh_forum_viewable_mat(
-  target_account_id INTEGER,
-  target_forum_id INTEGER
+  requested_account_id INTEGER,
+  requested_forum_id   INTEGER
 )
 RETURNS forum_viewable_mat AS
 $refresh_forum_viewable_mat$
@@ -15,8 +15,8 @@ $refresh_forum_viewable_mat$
       ON permission.role_id = role.id
     INNER JOIN alias
       ON role.id = alias.role_id
-    WHERE alias.account_id = target_account_id
-      AND forum_permission.forum_id = target_forum_id
+    WHERE alias.account_id = requested_account_id
+      AND forum_permission.forum_id = requested_forum_id
     GROUP BY
       forum_permission.forum_id
   )
@@ -24,8 +24,8 @@ $refresh_forum_viewable_mat$
     can_view = cte.can_view,
     expiry   = 'infinity'::TIMESTAMPTZ
   FROM cte
-  WHERE forum_viewable_mat.account_id = target_account_id
-    AND forum_viewable_mat.forum_id = target_forum_id
+  WHERE forum_viewable_mat.account_id = requested_account_id
+    AND forum_viewable_mat.forum_id = requested_forum_id
   RETURNING forum_viewable_mat.*;
 $refresh_forum_viewable_mat$
   VOLATILE

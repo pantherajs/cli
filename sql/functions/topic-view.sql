@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION topic_view(target_id INTEGER, target_token UUID)
+CREATE OR REPLACE FUNCTION topic_view(requested_id INTEGER, client_token UUID)
 RETURNS TABLE (
   status_code    INTEGER,
   json_data      JSONB
@@ -13,14 +13,14 @@ RETURNS TABLE (
       ON access_token.account_id = category_viewable.account_id
       AND category_viewable.can_view = TRUE
     WHERE access_token.account_id IS NOT NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
       AND category_viewable.category_id = (
         SELECT
           forum.category_id
         FROM forum
         INNER JOIN topic
           ON forum.id = topic.forum_id
-        WHERE topic.id = target_id
+        WHERE topic.id = requested_id
       )
     UNION ALL
     SELECT
@@ -36,14 +36,14 @@ RETURNS TABLE (
     INNER JOIN category_permission
       ON permission.id = category_permission.permission_id
     WHERE access_token.account_id IS NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
       AND category_permission.category_id = (
         SELECT
           forum.category_id
         FROM forum
         INNER JOIN topic
           ON forum.id = topic.forum_id
-        WHERE topic.id = target_id
+        WHERE topic.id = requested_id
       )
   ), forum_accessible AS (
     SELECT
@@ -55,7 +55,7 @@ RETURNS TABLE (
       ON access_token.account_id = forum_viewable.account_id
       AND forum_viewable.can_view = TRUE
     WHERE access_token.account_id IS NOT NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
     UNION ALL
     SELECT
       access_token.token,
@@ -70,7 +70,7 @@ RETURNS TABLE (
     INNER JOIN forum_permission
       ON permission.id = forum_permission.permission_id
     WHERE access_token.account_id IS NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
   ), topic_agg AS (
     SELECT
       topic.id                   AS topic_id,
@@ -104,7 +104,7 @@ RETURNS TABLE (
       ON topic.author_alias_id = topic_author.id
     INNER JOIN alias AS post_author
       ON post.author_alias_id = post_author.id
-    WHERE topic.id = target_id
+    WHERE topic.id = requested_id
     GROUP BY
       topic.id,
       topic.title,

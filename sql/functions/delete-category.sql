@@ -1,10 +1,10 @@
-CREATE OR REPLACE FUNCTION delete_category(category_id INTEGER, token UUID)
+CREATE OR REPLACE FUNCTION delete_category(requested_id INTEGER, client_token UUID)
 RETURNS TABLE (
   status_code INTEGER
 ) AS $delete_category$
   WITH authorized_user AS (
     SELECT
-      category_id
+      requested_id AS category_id
     FROM account
     INNER JOIN access_token
       ON account.id = access_token.account_id
@@ -21,7 +21,7 @@ RETURNS TABLE (
       AND can_delete_category.permission_type = 'DELETE'
       AND can_delete_category.resource_type = 'CATEGORY'
       AND can_delete_category.enabled = TRUE
-    WHERE access_token.token = token
+    WHERE access_token.token = client_token
     LIMIT 1
   ), delete_category AS (
     DELETE FROM category

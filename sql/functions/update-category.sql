@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION update_category(
   category_id       INTEGER,
   category_name     VARCHAR,
   category_sort_key INTEGER,
-  token             UUID
+  client_token      UUID
 ) RETURNS TABLE (
   status_code INTEGER
 ) AS $update_category$
@@ -25,7 +25,7 @@ CREATE OR REPLACE FUNCTION update_category(
       AND can_update_category.permission_type = 'UPDATE'
       AND can_update_category.resource_type = 'CATEGORY'
       AND can_update_category.enabled = TRUE
-    WHERE access_token.token = token
+    WHERE access_token.token = client_token
     LIMIT 1
   ), update_category AS (
     UPDATE category SET

@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION descendant_forums(base_id INTEGER)
+CREATE OR REPLACE FUNCTION descendant_forums(root_id INTEGER)
 RETURNS TABLE (
   id INTEGER
 ) AS $descendant_forums$
@@ -7,7 +7,7 @@ RETURNS TABLE (
       id,
       parent_forum_id
     FROM forum
-    WHERE id = base_id
+    WHERE id = root_id
     UNION ALL
     SELECT
       subforum.id,

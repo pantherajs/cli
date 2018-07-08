@@ -1,7 +1,8 @@
-CREATE OR REPLACE FUNCTION index_view(target_token UUID)
-RETURNS TABLE (
-  status_code       INTEGER,
-  json_data         JSONB
+CREATE OR REPLACE FUNCTION index_view(
+  client_token UUID
+) RETURNS TABLE (
+  status_code INTEGER,
+  json_data   JSONB
 ) AS $index_view$
   WITH RECURSIVE category_accessible AS (
     SELECT
@@ -13,7 +14,7 @@ RETURNS TABLE (
       ON access_token.account_id = category_viewable.account_id
       AND category_viewable.can_view = TRUE
     WHERE access_token.account_id IS NOT NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
     UNION ALL
     SELECT
       access_token.token,
@@ -28,7 +29,7 @@ RETURNS TABLE (
     INNER JOIN category_permission
       ON permission.id = category_permission.permission_id
     WHERE access_token.account_id IS NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
   ), forum_accessible AS (
     SELECT
       access_token.token,
@@ -39,7 +40,7 @@ RETURNS TABLE (
       ON access_token.account_id = forum_viewable.account_id
       AND forum_viewable.can_view = TRUE
     WHERE access_token.account_id IS NOT NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
     UNION ALL
     SELECT
       access_token.token,
@@ -54,7 +55,7 @@ RETURNS TABLE (
     INNER JOIN forum_permission
       ON permission.id = forum_permission.permission_id
     WHERE access_token.account_id IS NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
   ), descendant AS (
     SELECT
       forum.id       AS forum_id,
@@ -69,7 +70,7 @@ RETURNS TABLE (
     INNER JOIN forum_accessible
       ON forum.id = forum_accessible.forum_id
     WHERE forum.parent_forum_id IS NULL
-      AND forum_accessible.token = target_token
+      AND forum_accessible.token = client_token
     UNION ALL
     SELECT
       child.id       AS forum_id,

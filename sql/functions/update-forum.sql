@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION update_forum(
   forum_category_id INTEGER,
   forum_name        VARCHAR,
   forum_sort_key    INTEGER,
-  token             UUID
+  client_token      UUID
 ) RETURNS TABLE (
   status_code INTEGER
 ) AS $update_forum$
@@ -26,7 +26,7 @@ CREATE OR REPLACE FUNCTION update_forum(
       AND can_update_forum.permission_type = 'UPDATE'
       AND can_update_forum.resource_type = 'FORUM'
       AND can_update_forum.enabled = TRUE
-    WHERE access_token.token = token
+    WHERE access_token.token = client_token
     LIMIT 1
   ), update_forum AS (
     UPDATE forum SET

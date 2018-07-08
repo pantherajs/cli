@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION category_view(target_id INTEGER, target_token UUID)
+CREATE OR REPLACE FUNCTION category_view(requested_id INTEGER, client_token UUID)
 RETURNS TABLE (
   status_code       INTEGER,
   category_id       INTEGER,
@@ -15,8 +15,8 @@ RETURNS TABLE (
       ON access_token.account_id = category_viewable.account_id
       AND category_viewable.can_view = TRUE
     WHERE access_token.account_id IS NOT NULL
-      AND access_token.token = target_token
-      AND category_viewable.category_id = target_id
+      AND access_token.token = client_token
+      AND category_viewable.category_id = requested_id
     UNION ALL
     SELECT
       access_token.token,
@@ -31,8 +31,8 @@ RETURNS TABLE (
     INNER JOIN category_permission
       ON permission.id = category_permission.permission_id
     WHERE access_token.account_id IS NULL
-      AND access_token.token = target_token
-      AND category_permission.category_id = target_id
+      AND access_token.token = client_token
+      AND category_permission.category_id = requested_id
   ), forum_accessible AS (
     SELECT
       access_token.token,
@@ -43,7 +43,7 @@ RETURNS TABLE (
       ON access_token.account_id = forum_viewable.account_id
       AND forum_viewable.can_view = TRUE
     WHERE access_token.account_id IS NOT NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
     UNION ALL
     SELECT
       access_token.token,
@@ -58,7 +58,7 @@ RETURNS TABLE (
     INNER JOIN forum_permission
       ON permission.id = forum_permission.permission_id
     WHERE access_token.account_id IS NULL
-    AND access_token.token = target_token
+    AND access_token.token = client_token
   ), descendant AS (
     SELECT
       forum.id       AS forum_id,
@@ -72,9 +72,9 @@ RETURNS TABLE (
       ON forum.category_id = category_accessible.category_id
     INNER JOIN forum_accessible
       ON forum.id = forum_accessible.forum_id
-    WHERE forum.category_id = target_id
+    WHERE forum.category_id = requested_id
       AND forum.parent_forum_id IS NULL
-      AND forum_accessible.token = target_token
+      AND forum_accessible.token = client_token
     UNION ALL
     SELECT
       child.id       AS forum_id,
@@ -88,7 +88,7 @@ RETURNS TABLE (
       ON child.id = forum_accessible.forum_id
       AND forum_accessible.can_view = TRUE
     INNER JOIN descendant
-      ON child.category_id = target_id
+      ON child.category_id = requested_id
       AND child.parent_forum_id = descendant.forum_id
       AND forum_accessible.token = descendant.token
   ), forum_agg AS (
@@ -141,7 +141,7 @@ RETURNS TABLE (
       ON forum.id IN (descendants.forum_id, descendants.parent_forum_id)
     INNER JOIN forum_statistics
       ON descendants.forum_id = forum_statistics.forum_id
-    WHERE forum.category_id = target_id
+    WHERE forum.category_id = requested_id
       AND forum.parent_forum_id IS NULL
     GROUP BY
       forum.id,
@@ -200,7 +200,7 @@ RETURNS TABLE (
       ON category.id = category_accessible.category_id
     LEFT JOIN forum_result
       ON category.id = forum_result.forum_category_id
-    WHERE category.id = target_id
+    WHERE category.id = requested_id
     GROUP BY
       category.id,
       category.sort_key,

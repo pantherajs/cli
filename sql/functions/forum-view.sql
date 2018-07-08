@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION forum_view(target_id INTEGER, target_token UUID)
-RETURNS TABLE (
+CREATE OR REPLACE FUNCTION forum_view(
+  requested_id INTEGER,
+  client_token UUID
+) RETURNS TABLE (
   status_code    INTEGER,
   forum_id       INTEGER,
   forum_sort_key INTEGER,
@@ -15,9 +17,9 @@ RETURNS TABLE (
       ON access_token.account_id = category_viewable.account_id
       AND category_viewable.can_view = TRUE
     WHERE access_token.account_id IS NOT NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
       AND category_viewable.category_id = (
-        SELECT forum.category_id FROM forum WHERE forum.id = target_id
+        SELECT forum.category_id FROM forum WHERE forum.id = requested_id
       )
     UNION ALL
     SELECT
@@ -33,9 +35,9 @@ RETURNS TABLE (
     INNER JOIN category_permission
       ON permission.id = category_permission.permission_id
     WHERE access_token.account_id IS NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
       AND category_permission.category_id = (
-        SELECT forum.category_id FROM forum WHERE forum.id = target_id
+        SELECT forum.category_id FROM forum WHERE forum.id = requested_id
       )
   ), forum_accessible AS (
     SELECT
@@ -47,7 +49,7 @@ RETURNS TABLE (
       ON access_token.account_id = forum_viewable.account_id
       AND forum_viewable.can_view = TRUE
     WHERE access_token.account_id IS NOT NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
     UNION ALL
     SELECT
       access_token.token,
@@ -62,7 +64,7 @@ RETURNS TABLE (
     INNER JOIN forum_permission
       ON permission.id = forum_permission.permission_id
     WHERE access_token.account_id IS NULL
-      AND access_token.token = target_token
+      AND access_token.token = client_token
   ), descendant AS (
     (
       SELECT
@@ -77,8 +79,8 @@ RETURNS TABLE (
         ON forum.category_id = category_accessible.category_id
       INNER JOIN forum_accessible
         ON forum.id = forum_accessible.forum_id
-      WHERE forum.id = target_id
-        AND forum_accessible.token = target_token
+      WHERE forum.id = requested_id
+        AND forum_accessible.token = client_token
       LIMIT 1
     )
     UNION ALL
@@ -106,7 +108,7 @@ RETURNS TABLE (
       MAX(forum_statistics.recent_post_id) AS recent_post_id,
       COUNT(descendants.*) FILTER (
         WHERE descendants.forum_id IS NOT NULL
-          AND descendants.parent_forum_id = target_id
+          AND descendants.parent_forum_id = requested_id
       )                                    AS num_subforums,
       COALESCE(jsonb_agg(jsonb_build_object(
         'subforum_id',   descendants.forum_id,
@@ -116,7 +118,7 @@ RETURNS TABLE (
           descendants.forum_id ASC)
         FILTER (
           WHERE descendants.forum_id IS NOT NULL
-            AND descendants.parent_forum_id = target_id
+            AND descendants.parent_forum_id = requested_id
             AND descendants.can_view = TRUE
         ),
       '[]'::jsonb)                         AS subforums
@@ -133,7 +135,7 @@ RETURNS TABLE (
       ON TRUE
     INNER JOIN forum_statistics
       ON descendants.forum_id = forum_statistics.forum_id
-    WHERE forum.id = target_id
+    WHERE forum.id = requested_id
     GROUP BY
       forum.id,
       forum.sort_key,

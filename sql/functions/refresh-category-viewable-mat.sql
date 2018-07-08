@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION refresh_category_viewable_mat(
-  target_account_id INTEGER,
-  target_category_id INTEGER
+  requested_account_id  INTEGER,
+  requested_category_id INTEGER
 )
 RETURNS category_viewable_mat AS
 $refresh_category_viewable_mat$
@@ -15,8 +15,8 @@ $refresh_category_viewable_mat$
       ON permission.role_id = role.id
     INNER JOIN alias
       ON role.id = alias.role_id
-    WHERE alias.account_id = target_account_id
-      AND category_permission.category_id = target_category_id
+    WHERE alias.account_id = requested_account_id
+      AND category_permission.category_id = requested_category_id
     GROUP BY
       category_permission.category_id
   )
@@ -24,8 +24,8 @@ $refresh_category_viewable_mat$
     can_view = cte.can_view,
     expiry   = 'infinity'::TIMESTAMPTZ
   FROM cte
-  WHERE category_viewable_mat.account_id = target_account_id
-    AND category_viewable_mat.category_id = target_category_id
+  WHERE category_viewable_mat.account_id = requested_account_id
+    AND category_viewable_mat.category_id = requested_category_id
   RETURNING category_viewable_mat.*;
 $refresh_category_viewable_mat$
   VOLATILE
