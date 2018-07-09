@@ -10,7 +10,6 @@ BEGIN
 END;
 $delete_role$
   IMMUTABLE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER prevent_default_row_delete BEFORE DELETE ON role

@@ -1,5 +1,6 @@
-CREATE OR REPLACE FUNCTION refresh_alias_statistics_mat(requested_id INTEGER)
-RETURNS alias_statistics_mat AS
+CREATE OR REPLACE FUNCTION refresh_alias_statistics_mat(
+  requested_id INTEGER
+) RETURNS alias_statistics_mat AS
 $refresh_alias_statistics_mat$
   WITH topic AS (
     SELECT
@@ -31,8 +32,8 @@ $refresh_alias_statistics_mat$
   FROM topic
   CROSS JOIN post
   WHERE alias_statistics_mat.alias_id = requested_id
-  RETURNING alias_statistics_mat.*;
+  RETURNING
+    alias_statistics_mat.*;
 $refresh_alias_statistics_mat$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE sql;

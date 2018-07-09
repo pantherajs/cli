@@ -1,5 +1,8 @@
-CREATE OR REPLACE FUNCTION create_category(category_name VARCHAR, client_token UUID)
-RETURNS TABLE (
+CREATE OR REPLACE FUNCTION create_category(
+  category_name     CHARACTER VARYING,
+  category_sort_key INTEGER,
+  client_token      UUID
+) RETURNS TABLE (
   status_code INTEGER,
   json_data   JSONB
 ) AS $create_category$
@@ -25,15 +28,16 @@ RETURNS TABLE (
     WHERE access_token.token = client_token
     LIMIT 1
   ), insert_category AS (
-    INSERT INTO category (name)
+    INSERT INTO category (name, sort_key)
       SELECT
-        category_name
+        category_name,
+        COALESCE(category_sort_key, 0)
       FROM authorized_user
     RETURNING
-      id AS category_id,
+      category.id AS category_id,
       jsonb_build_object(
-        'category_id', id
-      )  AS json_data
+        'category_id', category.id
+      )           AS json_data
   ), response (status_code) AS (
     VALUES (201)
   )

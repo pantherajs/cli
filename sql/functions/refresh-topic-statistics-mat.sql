@@ -22,9 +22,9 @@ $refresh_topic_statistics_mat$
     recent_post_id = cte.recent_post_id,
     expiry         = cte.expiry
   FROM cte
-  WHERE topic_id = requested_id
-  RETURNING topic_statistics_mat.*;
+  WHERE topic_statistics_mat.topic_id = requested_id
+  RETURNING
+    topic_statistics_mat.*;
 $refresh_topic_statistics_mat$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE sql;

@@ -30,7 +30,6 @@ BEGIN
 END;
 $insert_category$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_category AFTER INSERT ON category

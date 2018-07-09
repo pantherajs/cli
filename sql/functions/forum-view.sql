@@ -2,10 +2,8 @@ CREATE OR REPLACE FUNCTION forum_view(
   requested_id INTEGER,
   client_token UUID
 ) RETURNS TABLE (
-  status_code    INTEGER,
-  forum_id       INTEGER,
-  forum_sort_key INTEGER,
-  json_data      JSONB
+  status_code INTEGER,
+  json_data   JSONB
 ) AS $forum_view$
   WITH RECURSIVE category_accessible AS (
     SELECT
@@ -19,7 +17,10 @@ CREATE OR REPLACE FUNCTION forum_view(
     WHERE access_token.account_id IS NOT NULL
       AND access_token.token = client_token
       AND category_viewable.category_id = (
-        SELECT forum.category_id FROM forum WHERE forum.id = requested_id
+        SELECT
+          forum.category_id
+        FROM forum
+        WHERE forum.id = requested_id
       )
     UNION ALL
     SELECT
@@ -37,7 +38,10 @@ CREATE OR REPLACE FUNCTION forum_view(
     WHERE access_token.account_id IS NULL
       AND access_token.token = client_token
       AND category_permission.category_id = (
-        SELECT forum.category_id FROM forum WHERE forum.id = requested_id
+        SELECT
+          forum.category_id
+        FROM forum
+        WHERE forum.id = requested_id
       )
   ), forum_accessible AS (
     SELECT
@@ -125,11 +129,11 @@ CREATE OR REPLACE FUNCTION forum_view(
     FROM forum
     LEFT JOIN (
         SELECT
-          forum_id,
-          forum_name,
-          forum_sort_key,
-          parent_forum_id,
-          can_view
+          descendant.forum_id,
+          descendant.forum_name,
+          descendant.forum_sort_key,
+          descendant.parent_forum_id,
+          descendant.can_view
         FROM descendant
       ) AS descendants
       ON TRUE
@@ -181,7 +185,7 @@ CREATE OR REPLACE FUNCTION forum_view(
     ELSE
       401
     END AS status_code,
-    result.*
+    result.json_data
   FROM response
   LEFT JOIN result
     ON TRUE

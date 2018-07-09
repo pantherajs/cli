@@ -1,20 +1,17 @@
 CREATE OR REPLACE FUNCTION refresh_category_viewable_mat(
   requested_account_id  INTEGER,
   requested_category_id INTEGER
-)
-RETURNS category_viewable_mat AS
+) RETURNS category_viewable_mat AS
 $refresh_category_viewable_mat$
   WITH cte AS (
     SELECT
-      category_permission.category_id            AS category_id,
+      category_permission.category_id              AS category_id,
       COALESCE(BOOL_OR(permission.enabled), FALSE) AS can_view
     FROM category_permission
     INNER JOIN permission
       ON category_permission.permission_id = permission.id
-    INNER JOIN role
-      ON permission.role_id = role.id
     INNER JOIN alias
-      ON role.id = alias.role_id
+      ON permission.role_id = alias.role_id
     WHERE alias.account_id = requested_account_id
       AND category_permission.category_id = requested_category_id
     GROUP BY
@@ -29,5 +26,4 @@ $refresh_category_viewable_mat$
   RETURNING category_viewable_mat.*;
 $refresh_category_viewable_mat$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE sql;

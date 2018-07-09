@@ -14,7 +14,6 @@ BEGIN
 END;
 $noncircular_parent_forum_reference$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER noncircular_parent_forum_reference BEFORE UPDATE ON forum

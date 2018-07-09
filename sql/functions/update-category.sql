@@ -37,7 +37,7 @@ CREATE OR REPLACE FUNCTION update_category(
       FROM authorized_user
     )
     RETURNING
-      id AS category_id
+      category.id AS category_id
   ), response (status_code) AS (
     VALUES (204)
   )

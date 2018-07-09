@@ -57,18 +57,18 @@ CREATE OR REPLACE FUNCTION create_topic(
       alias.role_id AS role_id
   ), acquire_alias AS (
     SELECT
-      alias_id,
-      role_id
+      existing_user_alias.alias_id,
+      existing_user_alias.role_id
     FROM existing_user_alias
     UNION ALL
     SELECT
-      alias_id,
-      role_id
+      existing_guest_alias.alias_id,
+      existing_guest_alias.role_id
     FROM existing_guest_alias
     UNION ALL
     SELECT
-      alias_id,
-      role_id
+      inserted_guest_alias.alias_id,
+      inserted_guest_alias.role_id
     FROM inserted_guest_alias
     LIMIT 1
   ), insert_topic AS (

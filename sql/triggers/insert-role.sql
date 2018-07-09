@@ -10,7 +10,7 @@ BEGIN
       FALSE           AS enabled
     FROM (
       SELECT
-        type
+        types.type
       FROM (
         SELECT
           unnest(enum_range(NULL::permission_type)) AS type
@@ -19,7 +19,7 @@ BEGIN
     ) AS permission
     CROSS JOIN (
       SELECT
-        type
+        types.type
       FROM (
         SELECT
           unnest(enum_range(NULL::resource_type)) AS type
@@ -34,7 +34,7 @@ BEGIN
       FALSE           AS enabled
     FROM (
       SELECT
-        type
+        types.type
       FROM (
         SELECT
           unnest(enum_range(NULL::permission_type)) AS type
@@ -43,7 +43,7 @@ BEGIN
     ) AS permission
     CROSS JOIN (
       SELECT
-        type
+        types.type
       FROM (
         SELECT
           unnest(enum_range(NULL::resource_type)) AS type
@@ -81,9 +81,9 @@ BEGIN
         permission.id,
         row_number() OVER () AS row_number
       FROM permission
-      WHERE resource_type = 'CATEGORY'
-        AND permission_type = 'READ'
-        AND role_id = NEW.id
+      WHERE permission.resource_type = 'CATEGORY'
+        AND permission.permission_type = 'READ'
+        AND permission.role_id = NEW.id
     ) AS permission
     INNER JOIN (
       SELECT
@@ -102,9 +102,9 @@ BEGIN
         permission.id,
         row_number() OVER () AS row_number
       FROM permission
-      WHERE resource_type = 'FORUM'
-        AND permission_type = 'READ'
-        AND role_id = NEW.id
+      WHERE permission.resource_type = 'FORUM'
+        AND permission.permission_type = 'READ'
+        AND permission.role_id = NEW.id
     ) AS permission
     INNER JOIN (
       SELECT
@@ -122,9 +122,9 @@ BEGIN
         permission.id,
         row_number() OVER () AS row_number
       FROM permission
-      WHERE resource_type IN ('TOPIC', 'POST')
-        AND permission_type IN ('CREATE', 'UPDATE', 'UPDATE_OWN', 'DELETE', 'DELETE_OWN')
-        AND role_id = NEW.id
+      WHERE permission.resource_type IN ('TOPIC', 'POST')
+        AND permission.permission_type IN ('CREATE', 'UPDATE', 'UPDATE_OWN', 'DELETE', 'DELETE_OWN')
+        AND permission.role_id = NEW.id
     ) AS permission
     INNER JOIN (
       SELECT
@@ -138,7 +138,6 @@ BEGIN
 END;
 $insert_role$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_role AFTER INSERT ON role

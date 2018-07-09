@@ -7,7 +7,7 @@ BEGIN
   IF (NEW.parent_forum_id IS NOT NULL) THEN
     UPDATE forum_statistics_mat SET
       expiry = NEW.created
-    WHERE forum_id = NEW.id;
+    WHERE forum_statistics_mat.forum_id = NEW.id;
   END IF;
 
   INSERT INTO forum_viewable_mat (account_id, forum_id, expiry)
@@ -33,7 +33,7 @@ BEGIN
     FROM role
     INNER JOIN (
       SELECT
-        type
+        types.type
       FROM (
         SELECT
           unnest(enum_range(NULL::permission_type)) AS type
@@ -42,7 +42,7 @@ BEGIN
     ) AS permission
     CROSS JOIN (
       SELECT
-        type
+        types.type
       FROM (
         SELECT
           unnest(enum_range(NULL::resource_type)) AS type
@@ -73,7 +73,6 @@ BEGIN
 END;
 $insert_forum$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_forum AFTER INSERT ON forum

@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS access_token (
   id         SERIAL                   NOT NULL,
   token      UUID                     NOT NULL DEFAULT uuid(),
-  account_id INTEGER,
+  account_id INTEGER                           DEFAULT NULL,
   issued     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   expires    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now() + (INTERVAL '1 DAY' * 30),
   CONSTRAINT access_token_primary_key

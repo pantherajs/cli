@@ -25,5 +25,5 @@ WITH cte AS (
 )
 UPDATE permission SET
   enabled = cte.enabled
-  FROM cte
-  WHERE permission.id = cte.permission_id;
+FROM cte
+WHERE permission.id = cte.permission_id;

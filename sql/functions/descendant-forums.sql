@@ -1,13 +1,14 @@
-CREATE OR REPLACE FUNCTION descendant_forums(root_id INTEGER)
-RETURNS TABLE (
+CREATE OR REPLACE FUNCTION descendant_forums(
+  root_id INTEGER
+) RETURNS TABLE (
   id INTEGER
 ) AS $descendant_forums$
   WITH RECURSIVE descendants AS (
     SELECT
-      id,
-      parent_forum_id
+      forum.id,
+      forum.parent_forum_id
     FROM forum
-    WHERE id = root_id
+    WHERE forum.id = root_id
     UNION ALL
     SELECT
       subforum.id,
@@ -17,7 +18,7 @@ RETURNS TABLE (
       ON subforum.parent_forum_id = descendants.id
   )
   SELECT
-    id
+    descendants.id
   FROM descendants;
 $descendant_forums$
   STABLE

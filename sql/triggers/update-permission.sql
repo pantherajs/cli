@@ -12,7 +12,7 @@ BEGIN
         FROM category_permission
         WHERE category_permission.permission_id = NEW.id
       )
-        AND NEW.modified <= expiry;
+        AND NEW.modified <= category_viewable_mat.expiry;
     END IF;
 
     IF (NEW.resource_type = 'FORUM') THEN
@@ -24,7 +24,7 @@ BEGIN
         FROM forum_permission
         WHERE forum_permission.permission_id = NEW.id
       )
-        AND NEW.modified <= expiry;
+        AND NEW.modified <= forum_viewable_mat.expiry;
     END IF;
   END IF;
 
@@ -32,7 +32,6 @@ BEGIN
 END;
 $update_permission$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER update_permission AFTER UPDATE ON permission

@@ -4,7 +4,7 @@ $insert_post$
 BEGIN
   UPDATE topic_statistics_mat SET
     expiry = NEW.created
-  WHERE topic_id = NEW.topic_id;
+  WHERE topic_statistics_mat.topic_id = NEW.topic_id;
 
   UPDATE forum_statistics_mat SET
     expiry = NEW.created
@@ -17,13 +17,12 @@ BEGIN
 
   UPDATE alias_statistics_mat SET
     expiry = NEW.created
-  WHERE alias_id = NEW.author_alias_id;
+  WHERE alias_statistics_mat.alias_id = NEW.author_alias_id;
 
   RETURN NEW;
 END;
 $insert_post$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_post AFTER INSERT ON post

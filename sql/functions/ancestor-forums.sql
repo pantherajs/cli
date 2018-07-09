@@ -1,13 +1,14 @@
-CREATE OR REPLACE FUNCTION ancestor_forums(root_id INTEGER)
-RETURNS TABLE (
+CREATE OR REPLACE FUNCTION ancestor_forums(
+  root_id INTEGER
+) RETURNS TABLE (
   id INTEGER
 ) AS $ancestor_forums$
   WITH RECURSIVE ancestors AS (
     SELECT
-      id,
-      parent_forum_id
+      forum.id,
+      forum.parent_forum_id
     FROM forum
-    WHERE id = root_id
+    WHERE forum.id = root_id
     UNION ALL
     SELECT
       parent.id,
@@ -17,7 +18,7 @@ RETURNS TABLE (
       ON parent.id = ancestors.parent_forum_id
   )
   SELECT
-    id
+    ancestors.id
   FROM ancestors;
 $ancestor_forums$
   STABLE

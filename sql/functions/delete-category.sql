@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION delete_category(requested_id INTEGER, client_token UUID)
-RETURNS TABLE (
+CREATE OR REPLACE FUNCTION delete_category(
+  requested_id INTEGER,
+  client_token UUID
+) RETURNS TABLE (
   status_code INTEGER
 ) AS $delete_category$
   WITH authorized_user AS (
@@ -25,13 +27,13 @@ RETURNS TABLE (
     LIMIT 1
   ), delete_category AS (
     DELETE FROM category
-    WHERE id = (
+    WHERE category.id = (
       SELECT
-        category_id
+        authorized_user.category_id
       FROM authorized_user
     )
     RETURNING
-      id AS category_id
+      category.id AS category_id
   ), response (status_code) AS (
     VALUES (204)
   )

@@ -1,14 +1,21 @@
 CREATE TABLE IF NOT EXISTS alias (
   id         SERIAL                       NOT NULL,
-  account_id INTEGER                  DEFAULT NULL REFERENCES account(id),
-  role_id    INTEGER                      NOT NULL REFERENCES role(id),
-  name       CHARACTER VARYING(64)        NOT NULL UNIQUE,
-  type       ALIAS_TYPE          NOT NULL DEFAULT 'SECONDARY',
+  account_id INTEGER                               DEFAULT NULL,
+  role_id    INTEGER                      NOT NULL,
+  name       CHARACTER VARYING(64)        NOT NULL,
+  type       ALIAS_TYPE                   NOT NULL DEFAULT 'SECONDARY',
   created    TIMESTAMP WITH TIME ZONE     NOT NULL DEFAULT now(),
   modified   TIMESTAMP WITH TIME ZONE     NOT NULL DEFAULT now(),
-  CONSTRAINT alias_primary_key            PRIMARY KEY (id),
-  CONSTRAINT alias_foreign_key_account_id FOREIGN KEY (account_id) REFERENCES account(id),
-  CONSTRAINT alias_foreign_key_role_id    FOREIGN KEY (role_id)    REFERENCES role(id)
+  CONSTRAINT alias_primary_key
+    PRIMARY KEY (id),
+  CONSTRAINT alias_foreign_key_account_id
+    FOREIGN KEY (account_id)
+    REFERENCES account(id),
+  CONSTRAINT alias_foreign_key_role_id
+    FOREIGN KEY (role_id)
+    REFERENCES role(id),
+  CONSTRAINT alias_foreign_key_unique_role_id_name
+    UNIQUE (role_id, name)
 );
 
 CREATE INDEX alias_index_account_id

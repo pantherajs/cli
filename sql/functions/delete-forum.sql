@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION delete_forum(requested_id INTEGER, client_token UUID)
-RETURNS TABLE (
+CREATE OR REPLACE FUNCTION delete_forum(
+  requested_id INTEGER,
+  client_token UUID
+) RETURNS TABLE (
   status_code INTEGER
 ) AS $delete_forum$
   WITH authorized_user AS (
@@ -25,13 +27,13 @@ RETURNS TABLE (
     LIMIT 1
   ), delete_forum AS (
     DELETE FROM forum
-    WHERE id = (
+    WHERE forum.id = (
       SELECT
-        forum_id
+        authorized_user.forum_id
       FROM authorized_user
     )
     RETURNING
-      id AS forum_id
+      forum.id AS forum_id
   ), response (status_code) AS (
     VALUES (204)
   )

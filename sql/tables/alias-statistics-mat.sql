@@ -1,9 +1,11 @@
 CREATE TABLE IF NOT EXISTS alias_statistics_mat (
-  alias_id        INTEGER PRIMARY KEY,
-  num_topics      INTEGER NOT NULL DEFAULT 0,
-  num_posts       INTEGER NOT NULL DEFAULT 0,
-  recent_post_id  INTEGER,
+  alias_id        INTEGER                  NOT NULL,
+  num_topics      INTEGER                  NOT NULL DEFAULT 0,
+  num_posts       INTEGER                  NOT NULL DEFAULT 0,
+  recent_post_id  INTEGER                           DEFAULT NULL,
   expiry          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT 'infinity',
+  CONSTRAINT alias_statistics_mat_primary_key
+    PRIMARY KEY (alias_id),
   CONSTRAINT alias_statistics_mat_foreign_key_alias_id
     FOREIGN KEY (alias_id)
     REFERENCES alias (id)
@@ -21,4 +23,4 @@ CREATE TABLE IF NOT EXISTS alias_statistics_mat (
 CREATE INDEX alias_statistics_mat_index_expiry
   ON alias_statistics_mat(expiry ASC);
 
-GRANT SELECT ON alias_statistics_mat TO %I;
+GRANT SELECT, INSERT, UPDATE ON alias_statistics_mat TO %I;

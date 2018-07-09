@@ -10,7 +10,6 @@ BEGIN
 END;
 $update_role$
   IMMUTABLE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER prevent_default_row_update BEFORE UPDATE ON role

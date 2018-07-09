@@ -1,5 +1,6 @@
-CREATE OR REPLACE FUNCTION refresh_forum_statistics_mat(requested_id INTEGER)
-RETURNS forum_statistics_mat AS
+CREATE OR REPLACE FUNCTION refresh_forum_statistics_mat(
+  requested_id INTEGER
+) RETURNS forum_statistics_mat AS
 $refresh_forum_statistics_mat$
   WITH cte AS (
     SELECT
@@ -35,8 +36,8 @@ $refresh_forum_statistics_mat$
   LEFT JOIN topic
     ON post.topic_id = topic.id
   WHERE forum_statistics_mat.forum_id = requested_id
-  RETURNING forum_statistics_mat.*;
+  RETURNING
+    forum_statistics_mat.*;
 $refresh_forum_statistics_mat$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE sql;

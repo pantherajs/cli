@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS forum;
 CREATE TABLE IF NOT EXISTS forum (
   id              SERIAL                   NOT NULL,
   category_id     INTEGER                  NOT NULL,
-  parent_forum_id INTEGER                  DEFAULT NULL,
+  parent_forum_id INTEGER                           DEFAULT NULL,
   name            CHARACTER VARYING(64)    NOT NULL,
   sort_key        INTEGER                  NOT NULL DEFAULT 0,
   created         TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),

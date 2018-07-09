@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION category_view(requested_id INTEGER, client_token UUID)
-RETURNS TABLE (
-  status_code       INTEGER,
-  category_id       INTEGER,
-  category_sort_key INTEGER,
-  json_data         JSONB
+CREATE OR REPLACE FUNCTION category_view(
+  requested_id INTEGER,
+  client_token UUID
+) RETURNS TABLE (
+  status_code INTEGER,
+  json_data   JSONB
 ) AS $category_view$
   WITH RECURSIVE category_accessible AS (
     SELECT
@@ -131,11 +131,11 @@ RETURNS TABLE (
     FROM forum
     LEFT JOIN (
         SELECT
-          forum_id,
-          forum_name,
-          forum_sort_key,
-          parent_forum_id,
-          can_view
+          descendant.forum_id,
+          descendant.forum_name,
+          descendant.forum_sort_key,
+          descendant.parent_forum_id,
+          descendant.can_view
         FROM descendant
       ) AS descendants
       ON forum.id IN (descendants.forum_id, descendants.parent_forum_id)
@@ -215,7 +215,7 @@ RETURNS TABLE (
     ELSE
       401
     END AS status_code,
-    result.*
+    result.json_data
   FROM response
   LEFT JOIN result
     ON TRUE

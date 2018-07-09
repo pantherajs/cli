@@ -5,6 +5,5 @@ BEGIN
   RETURN NEW;
 END;
 $update_modified_column$
-  LANGUAGE plpgsql
   IMMUTABLE
-  SECURITY INVOKER;
+  LANGUAGE plpgsql;

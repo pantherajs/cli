@@ -1,10 +1,12 @@
 CREATE TABLE IF NOT EXISTS forum_statistics_mat (
-  forum_id        INTEGER PRIMARY KEY,
-  num_topics      INTEGER NOT NULL DEFAULT 0,
-  num_posts       INTEGER NOT NULL DEFAULT 0,
-  recent_topic_id INTEGER,
-  recent_post_id  INTEGER,
+  forum_id        INTEGER                  NOT NULL,
+  num_topics      INTEGER                  NOT NULL DEFAULT 0,
+  num_posts       INTEGER                  NOT NULL DEFAULT 0,
+  recent_topic_id INTEGER                           DEFAULT NULL,
+  recent_post_id  INTEGER                           DEFAULT NULL,
   expiry          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT 'infinity',
+  CONSTRAINT forum_statistics_mat_primary_key
+    PRIMARY KEY (forum_id),
   CONSTRAINT forum_statistics_mat_foreign_key_forum_id
     FOREIGN KEY (forum_id)
     REFERENCES forum(id)

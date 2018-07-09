@@ -126,11 +126,11 @@ CREATE OR REPLACE FUNCTION index_view(
     FROM forum
     LEFT JOIN (
         SELECT
-          forum_id,
-          forum_name,
-          forum_sort_key,
-          parent_forum_id,
-          can_view
+          descendant.forum_id,
+          descendant.forum_name,
+          descendant.forum_sort_key,
+          descendant.parent_forum_id,
+          descendant.can_view
         FROM descendant
       ) AS descendants
       ON forum.id IN (descendants.forum_id, descendants.parent_forum_id)

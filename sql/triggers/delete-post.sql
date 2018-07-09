@@ -4,31 +4,28 @@ $delete_post$
 BEGIN
   UPDATE topic_statistics_mat SET
     expiry = '-infinity'
-  WHERE topic_id = OLD.topic_id
-    AND OLD.created <= expiry;
+  WHERE topic_statistics_mat.topic_id = OLD.topic_id
+    AND OLD.created <= topic_statistics_mat.expiry;
 
   UPDATE forum_statistics_mat SET
     expiry = '-infinity'
-  WHERE forum_id IN ((
-    SELECT ancestor_forums((
-      SELECT
-        topic.forum_id
-      FROM topic
-      WHERE topic.id = OLD.topic_id
-    ))
-  ))
-    AND OLD.created <= expiry;
+  WHERE forum_statistics_mat.forum_id = (
+    SELECT
+      topic.forum_id
+    FROM topic
+    WHERE topic.id = OLD.topic_id
+  )
+    AND OLD.created <= forum_statistics_mat.expiry;
 
   UPDATE alias_statistics_mat SET
     expiry = '-infinity'
-  WHERE alias_id = OLD.author_alias_id
-    AND OLD.created <= expiry;
+  WHERE alias_statistics_mat.alias_id = OLD.author_alias_id
+    AND OLD.created <= alias_statistics_mat.expiry;
 
   RETURN OLD;
 END;
 $delete_post$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_post AFTER DELETE ON post

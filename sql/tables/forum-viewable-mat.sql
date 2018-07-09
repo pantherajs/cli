@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS forum_viewable_mat (
-  account_id INTEGER NOT NULL,
-  forum_id   INTEGER NOT NULL,
-  can_view   BOOLEAN NOT NULL DEFAULT FALSE,
+  account_id INTEGER                  NOT NULL,
+  forum_id   INTEGER                  NOT NULL,
+  can_view   BOOLEAN                  NOT NULL DEFAULT FALSE,
   expiry     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT 'infinity',
   CONSTRAINT forum_viewable_mat_primary_key
     PRIMARY KEY (account_id, forum_id),
@@ -22,4 +22,4 @@ CREATE INDEX forum_viewable_mat_index_forum_id
 CREATE INDEX forum_viewable_mat_index_expiry
   ON forum_viewable_mat(expiry ASC);
 
-GRANT SELECT ON forum_viewable_mat TO %I;
+GRANT SELECT, INSERT, UPDATE ON forum_viewable_mat TO %I;

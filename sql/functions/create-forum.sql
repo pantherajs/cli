@@ -38,10 +38,10 @@ CREATE OR REPLACE FUNCTION create_forum(
         COALESCE(forum_sort_key, 0)
       FROM authorized_user
     RETURNING
-      id AS forum_id,
+      forum.id AS forum_id,
       jsonb_build_object(
-        'forum_id', id
-      )  AS json_data
+        'forum_id', forum.id
+      )        AS json_data
   ), response (status_code) AS (
     VALUES (201)
   )

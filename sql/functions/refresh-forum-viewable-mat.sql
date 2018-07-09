@@ -1,12 +1,11 @@
 CREATE OR REPLACE FUNCTION refresh_forum_viewable_mat(
   requested_account_id INTEGER,
   requested_forum_id   INTEGER
-)
-RETURNS forum_viewable_mat AS
+) RETURNS forum_viewable_mat AS
 $refresh_forum_viewable_mat$
   WITH cte AS (
     SELECT
-      forum_permission.forum_id                  AS forum_id,
+      forum_permission.forum_id                    AS forum_id,
       COALESCE(BOOL_OR(permission.enabled), FALSE) AS can_view
     FROM forum_permission
     INNER JOIN permission
@@ -26,8 +25,8 @@ $refresh_forum_viewable_mat$
   FROM cte
   WHERE forum_viewable_mat.account_id = requested_account_id
     AND forum_viewable_mat.forum_id = requested_forum_id
-  RETURNING forum_viewable_mat.*;
+  RETURNING
+    forum_viewable_mat.*;
 $refresh_forum_viewable_mat$
   VOLATILE
-  SECURITY DEFINER
   LANGUAGE sql;

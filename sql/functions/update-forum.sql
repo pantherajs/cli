@@ -39,7 +39,7 @@ CREATE OR REPLACE FUNCTION update_forum(
       FROM authorized_user
     )
     RETURNING
-      id AS forum_id
+      forum.id AS forum_id
   ), response (status_code) AS (
     VALUES (204)
   )

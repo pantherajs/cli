@@ -1,5 +1,7 @@
-CREATE OR REPLACE FUNCTION topic_view(requested_id INTEGER, client_token UUID)
-RETURNS TABLE (
+CREATE OR REPLACE FUNCTION topic_view(
+  requested_id INTEGER,
+  client_token UUID
+) RETURNS TABLE (
   status_code    INTEGER,
   json_data      JSONB
 ) AS $topic_view$
@@ -91,8 +93,8 @@ RETURNS TABLE (
     FROM topic
     INNER JOIN (
         SELECT
-          forum_id,
-          can_view
+          forum_accessible.forum_id,
+          forum_accessible.can_view
         FROM forum_accessible
       ) AS parent_forum
       ON topic.forum_id = parent_forum.forum_id
