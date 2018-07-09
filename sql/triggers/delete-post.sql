@@ -25,7 +25,6 @@ BEGIN
   RETURN OLD;
 END;
 $delete_post$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_post AFTER DELETE ON post

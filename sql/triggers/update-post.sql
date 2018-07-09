@@ -26,7 +26,6 @@ BEGIN
   RETURN NEW;
 END;
 $update_post$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER update_post AFTER UPDATE ON post

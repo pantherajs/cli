@@ -9,7 +9,6 @@ BEGIN
   RETURN NEW;
 END;
 $update_role$
-  IMMUTABLE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER prevent_default_row_update BEFORE UPDATE ON role

@@ -5,5 +5,4 @@ BEGIN
   RETURN NEW;
 END;
 $update_modified_column$
-  IMMUTABLE
   LANGUAGE plpgsql;

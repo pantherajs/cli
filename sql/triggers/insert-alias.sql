@@ -12,7 +12,6 @@ BEGIN
   RETURN NEW;
 END;
 $insert_alias$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_alias AFTER INSERT ON alias

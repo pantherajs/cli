@@ -19,7 +19,6 @@ BEGIN
   RETURN NEW;
 END;
 $insert_account$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_account AFTER INSERT ON account

@@ -10,7 +10,6 @@ BEGIN
   RETURN OLD;
 END;
 $delete_alias$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_alias AFTER DELETE ON alias

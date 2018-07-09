@@ -17,7 +17,6 @@ BEGIN
   RETURN NEW;
 END;
 $update_topic$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER update_topic AFTER UPDATE ON topic

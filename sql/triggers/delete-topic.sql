@@ -15,7 +15,6 @@ BEGIN
   RETURN OLD;
 END;
 $delete_topic$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_topic AFTER DELETE ON topic

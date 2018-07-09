@@ -9,8 +9,6 @@ BEGIN
   RETURN NEW;
 END;
 $distinct_parent_forum_reference$
-  VOLATILE
-  SECURITY DEFINER
   LANGUAGE plpgsql;
 
 CREATE TRIGGER distinct_parent_forum_reference BEFORE INSERT ON forum

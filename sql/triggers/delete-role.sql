@@ -9,7 +9,6 @@ BEGIN
   RETURN OLD;
 END;
 $delete_role$
-  IMMUTABLE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER prevent_default_row_delete BEFORE DELETE ON role

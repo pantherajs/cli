@@ -13,7 +13,6 @@ BEGIN
   RETURN NEW;
 END;
 $noncircular_parent_forum_reference$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER noncircular_parent_forum_reference BEFORE UPDATE ON forum

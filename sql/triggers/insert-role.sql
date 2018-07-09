@@ -137,7 +137,6 @@ BEGIN
   RETURN NEW;
 END;
 $insert_role$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_role AFTER INSERT ON role

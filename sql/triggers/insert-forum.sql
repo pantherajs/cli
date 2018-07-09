@@ -72,7 +72,6 @@ BEGIN
   RETURN NEW;
 END;
 $insert_forum$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_forum AFTER INSERT ON forum

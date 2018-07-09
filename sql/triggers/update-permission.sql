@@ -31,7 +31,6 @@ BEGIN
   RETURN NEW;
 END;
 $update_permission$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER update_permission AFTER UPDATE ON permission

@@ -16,7 +16,6 @@ BEGIN
   RETURN NEW;
 END;
 $insert_topic$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_topic AFTER INSERT ON topic

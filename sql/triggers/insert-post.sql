@@ -22,7 +22,6 @@ BEGIN
   RETURN NEW;
 END;
 $insert_post$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_post AFTER INSERT ON post

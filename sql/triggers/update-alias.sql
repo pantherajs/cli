@@ -17,7 +17,6 @@ BEGIN
   RETURN NEW;
 END;
 $update_alias$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER update_alias AFTER UPDATE ON alias

@@ -29,7 +29,6 @@ BEGIN
   RETURN NEW;
 END;
 $insert_category$
-  VOLATILE
   LANGUAGE plpgsql;
 
 CREATE TRIGGER insert_category AFTER INSERT ON category
