@@ -32,4 +32,4 @@ CREATE INDEX forum_statistics_mat_index_recent_post_id
 CREATE INDEX forum_statistics_mat_index_expiry
   ON forum_statistics_mat(expiry ASC);
 
-GRANT SELECT ON forum_statistics_mat TO %I;
+GRANT SELECT, INSERT, UPDATE ON forum_statistics_mat TO %I;
