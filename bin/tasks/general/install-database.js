@@ -62,6 +62,8 @@ const tasks = [
   sql.triggers.after['insert-post'],
   sql.triggers.after['update-post'],
   sql.triggers.after['delete-post'],
+  sql.triggers.after['delete-category-permission'],
+  sql.triggers.after['delete-forum-permission'],
   sql.functions['refresh-category-viewable-mat'],
   sql.views['category-viewable'],
   sql.functions['refresh-forum-viewable-mat'],
