@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/pantherajs/cli#readme",
   "dependencies": {
+    "@panthera/server": "0.0.0",
     "chokidar": "^2.0.4",
     "dotenv": "^6.0.0",
     "execa": "^0.10.0",
