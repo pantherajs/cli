@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS category;
-
 CREATE TABLE IF NOT EXISTS category (
   id       SERIAL                   NOT NULL,
   name     CHARACTER VARYING(64)    NOT NULL,

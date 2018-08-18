@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS role CASCADE;
-
 CREATE TABLE IF NOT EXISTS role (
   id       SERIAL                   NOT NULL,
   name     CHARACTER VARYING(64)    NOT NULL,

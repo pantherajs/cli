@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS post;
-
 CREATE TABLE IF NOT EXISTS post (
   id              SERIAL                   NOT NULL,
   topic_id        INTEGER                  NOT NULL,

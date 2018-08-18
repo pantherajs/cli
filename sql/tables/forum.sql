@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS forum;
-
 CREATE TABLE IF NOT EXISTS forum (
   id              SERIAL                   NOT NULL,
   category_id     INTEGER                  NOT NULL,
