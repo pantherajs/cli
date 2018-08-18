@@ -7,9 +7,7 @@
     "panthera": "bin/index.js"
   },
   "scripts": {
-    "coverage": "codecov",
-    "lint": "eslint bin/",
-    "test": "nyc ava"
+    "test": "eslint bin && nyc ava"
   },
   "engines": {
     "node": ">=8.2.1"
@@ -25,8 +23,8 @@
   },
   "homepage": "https://github.com/pantherajs/cli#readme",
   "dependencies": {
-    "@panthera/pubsub": "0.0.2",
-    "@panthera/server": "0.0.1",
+    "@panthera/pubsub": "0.0.5",
+    "@panthera/server": "0.0.3",
     "dotenv": "^6.0.0",
     "execa": "^0.10.0",
     "listr": "^0.14.1",
@@ -42,7 +40,6 @@
   },
   "devDependencies": {
     "ava": "1.0.0-beta.4",
-    "codecov": "^3.0.4",
     "eslint": "^5.4.0",
     "nyc": "^12.0.2",
     "proxyquire": "^2.0.1",
