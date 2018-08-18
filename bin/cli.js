@@ -1,6 +1,5 @@
 /**
  * @file bin/cli.js
- * @todo Unit tests for this. Bit pointless, but might as well.
  */
 'use strict';
 
