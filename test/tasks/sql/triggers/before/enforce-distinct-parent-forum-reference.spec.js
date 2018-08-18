@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const distinct = proxyquire('../../../../../bin/tasks/sql/triggers/before/enforce-distinct-parent-forum-reference', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/before/enforce-distinct-parent-forum-reference', stubs);
 
 test('should create `enforce_distinct_parent_forum_reference` trigger', async t => {
-  await t.notThrows(() => distinct.task({}));
+  await t.notThrows(() => include.task({}));
 });

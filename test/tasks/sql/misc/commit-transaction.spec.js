@@ -11,7 +11,7 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const commit = proxyquire('../../../../bin/tasks/sql/misc/commit-transaction', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/misc/commit-transaction', stubs);
 
 test('should only be enabled if `ctx.error` is false', t => {
   const context = {
@@ -21,10 +21,10 @@ test('should only be enabled if `ctx.error` is false', t => {
   };
 
   context.error = false;
-  t.true(commit.enabled(context));
+  t.true(include.enabled(context));
 
   context.error = true;
-  t.false(commit.enabled(context));
+  t.false(include.enabled(context));
 });
 
 test('should commit database transaction', async t => {
@@ -36,7 +36,7 @@ test('should commit database transaction', async t => {
     }
   };
 
-  await t.notThrows(() => commit.task(context));
+  await t.notThrows(() => include.task(context));
 });
 
 test('should set `ctx.inTransaction` to false', async t => {
@@ -48,6 +48,6 @@ test('should set `ctx.inTransaction` to false', async t => {
     }
   };
 
-  await t.notThrows(() => commit.task(context));
+  await t.notThrows(() => include.task(context));
   t.false(context.inTransaction);
 });

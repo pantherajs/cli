@@ -12,14 +12,14 @@ const stubs = {
   '../../../utils/sql-task':      sinon.stub().resolves()
 };
 
-const create = proxyquire('../../../../bin/tasks/sql/misc/create-schema', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/misc/create-schema', stubs);
 
 test('should be enabled if the client can query and `ctx.schemaExists` is false', t => {
   const context = {
     schemaExists: false
   };
 
-  t.true(create.enabled(context));
+  t.true(include.enabled(context));
 });
 
 test('should create the schema', async t => {
@@ -30,6 +30,6 @@ test('should create the schema', async t => {
   };
   const task = {};
 
-  await create.task(context, task);
+  await include.task(context, task);
   t.pass();
 });

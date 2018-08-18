@@ -11,7 +11,7 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const accessToken = proxyquire('../../../../bin/tasks/sql/tables/access-token', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/tables/access-token', stubs);
 
 test('should create `access_token` table', async t => {
   const context = {
@@ -20,5 +20,5 @@ test('should create `access_token` table', async t => {
     }
   };
 
-  await t.notThrows(() => accessToken.task(context));
+  await t.notThrows(() => include.task(context));
 });

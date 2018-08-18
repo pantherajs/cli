@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const deletePost = proxyquire('../../../../../bin/tasks/sql/triggers/after/delete-post', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/after/delete-post', stubs);
 
 test('should create `delete_post` trigger', async t => {
-  await t.notThrows(() => deletePost.task({}));
+  await t.notThrows(() => include.task({}));
 });

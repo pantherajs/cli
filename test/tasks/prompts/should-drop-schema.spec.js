@@ -12,14 +12,14 @@ const stubs = {
   '../../utils/query-enabled': sinon.stub().returns(true)
 };
 
-const drop = proxyquire('../../../bin/tasks/prompts/should-drop-schema', stubs);
+const include = proxyquire('../../../bin/tasks/prompts/should-drop-schema', stubs);
 
 test('should be enabled if `ctx.schemaExists` is true', t => {
   const context = {
     schemaExists: true
   };
 
-  t.true(drop.enabled(context));
+  t.true(include.enabled(context));
 });
 
 test('should accept only `Y` or `n` as input', t => {
@@ -30,7 +30,7 @@ test('should accept only `Y` or `n` as input', t => {
   };
   const task = {};
 
-  const result = drop.task(context, task);
+  const result = include.task(context, task);
   t.true(result.validate('Y'));
   t.true(result.validate('n'));
 });
@@ -43,7 +43,7 @@ test('should set `ctx.dropSchema` to true if input is `Y`', t => {
   };
   const task = {};
 
-  drop.task(context, task).done('Y');
+  include.task(context, task).done('Y');
   t.true(context.dropSchema);
 });
 
@@ -55,6 +55,6 @@ test('should set `ctx.dropSchema` to false if input is `n`', t => {
   };
   const task = {};
 
-  drop.task(context, task).done('n');
+  include.task(context, task).done('n');
   t.false(context.dropSchema);
 });

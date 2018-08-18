@@ -6,14 +6,14 @@
 const test  = require('ava');
 const sinon = require('sinon');
 
-const get = require('../../../bin/tasks/general/get-configuration');
+const include = require('../../../bin/tasks/general/get-configuration');
 
 test('should only run if `ctx.apiEnv` is false', t => {
-  t.true(get.enabled({
+  t.true(include.enabled({
     apiEnv: false
   }));
 
-  t.false(get.enabled({
+  t.false(include.enabled({
     apiEnv: true
   }));
 });
@@ -24,6 +24,6 @@ test('should set `ctx.parent`', async t => {
     title: 'title'
   };
 
-  get.task(context, task);
+  include.task(context, task);
   t.truthy(context.parent);
 });

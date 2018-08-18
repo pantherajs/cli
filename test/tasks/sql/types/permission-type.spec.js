@@ -11,8 +11,8 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const permissionType = proxyquire('../../../../bin/tasks/sql/types/permission-type', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/types/permission-type', stubs);
 
 test('should create `permission_type` type', async t => {
-  await t.notThrows(() => permissionType.task({}));
+  await t.notThrows(() => include.task({}));
 });

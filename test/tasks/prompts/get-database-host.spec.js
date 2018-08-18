@@ -11,7 +11,7 @@ const stubs = {
   'listr-input': sinon.stub().returnsArg(1)
 };
 
-const get = proxyquire('../../../bin/tasks/prompts/get-database-host', stubs);
+const include = proxyquire('../../../bin/tasks/prompts/get-database-host', stubs);
 
 test('should validate only if input.length > 0', t => {
   const context = {
@@ -23,7 +23,7 @@ test('should validate only if input.length > 0', t => {
   };
   const task = {};
 
-  const result = get.task(context, task);
+  const result = include.task(context, task);
   t.true(result.validate('hello, world'));
   t.false(result.validate(''));
 });
@@ -38,7 +38,7 @@ test('should set `ctx.env.PANTHERA_DB_HOST`', t => {
   };
   const task = {};
 
-  const result = get.task(context, task);
+  const result = include.task(context, task);
   result.done('hello, world');
   t.true(context.env.PANTHERA_DB_HOST === 'hello, world');
 });

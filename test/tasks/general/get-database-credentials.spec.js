@@ -6,14 +6,14 @@
 const test  = require('ava');
 const sinon = require('sinon');
 
-const get = require('../../../bin/tasks/general/get-database-credentials');
+const include = require('../../../bin/tasks/general/get-database-credentials');
 
 test('should only run if `ctx.dbEnv` is false', t => {
-  t.true(get.enabled({
+  t.true(include.enabled({
     dbEnv: false
   }));
 
-  t.false(get.enabled({
+  t.false(include.enabled({
     dbEnv: true
   }));
 });
@@ -24,6 +24,6 @@ test('should set `ctx.parent`', async t => {
     title: 'title'
   };
 
-  get.task(context, task);
+  include.task(context, task);
   t.truthy(context.parent);
 });

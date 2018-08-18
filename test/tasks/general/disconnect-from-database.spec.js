@@ -14,7 +14,7 @@ const stubs = {
 
 stubs.pg.Client.prototype.end = sinon.stub().resolves();
 
-const disconnect = require('../../../bin/tasks/general/disconnect-from-database');
+const include = require('../../../bin/tasks/general/disconnect-from-database');
 
 test('should only be enabled if `ctx.connected` is true', t => {
   const ctx = {
@@ -22,10 +22,10 @@ test('should only be enabled if `ctx.connected` is true', t => {
   };
 
   ctx.connected = true;
-  t.true(disconnect.enabled(ctx));
+  t.true(include.enabled(ctx));
 
   ctx.connected = false;
-  t.false(disconnect.enabled(ctx));
+  t.false(include.enabled(ctx));
 });
 
 test('should call `ctx.client.end`', async t => {
@@ -38,6 +38,6 @@ test('should call `ctx.client.end`', async t => {
     title: 'title'
   };
 
-  await disconnect.task(ctx, task);
+  await include.task(ctx, task);
   t.true(ctx.client.end.called);
 });

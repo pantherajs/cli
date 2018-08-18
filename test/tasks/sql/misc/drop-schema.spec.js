@@ -12,14 +12,14 @@ const stubs = {
   '../../../utils/sql-task':      sinon.stub().resolves()
 };
 
-const drop = proxyquire('../../../../bin/tasks/sql/misc/drop-schema', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/misc/drop-schema', stubs);
 
 test('should be enabled only if `ctx.dropSchema` is true', t => {
-  t.true(drop.enabled({
+  t.true(include.enabled({
     dropSchema: true
   }));
 
-  t.false(drop.enabled({
+  t.false(include.enabled({
     dropSchema: false
   }));
 });
@@ -33,6 +33,6 @@ test('should drop schema', async t => {
   };
   const task = {};
 
-  await drop.task(context, task);
+  await include.task(context, task);
   t.false(context.schemaExists);
 });

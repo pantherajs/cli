@@ -12,7 +12,7 @@ const stubs = {
   execa: stub
 };
 
-const checkPostgres = proxyquire('../../../bin/tasks/general/check-postgres', stubs);
+const include = proxyquire('../../../bin/tasks/general/check-postgres', stubs);
 
 test.serial.afterEach(() => {
   stub.reset();
@@ -25,7 +25,7 @@ test.serial('should resolve if PostgreSQL >=10.x', async t => {
 
   const context = {};
 
-  await checkPostgres.task(context, {
+  await include.task(context, {
     title: 'title'
   });
   t.true(stub.callCount === 1);
@@ -39,11 +39,11 @@ test.serial('should reject if PostgreSQL <10.x', async t => {
 
   const context = {};
 
-  let tasl = {
+  let task = {
     title: 'title'
   };
 
-  await t.throws(checkPostgres.task(context, tasl));
+  await t.throws(include.task(context, task));
   t.true(stub.callCount === 1);
   t.true(context.version === '9.6');
 });
@@ -51,7 +51,7 @@ test.serial('should reject if PostgreSQL <10.x', async t => {
 test.serial('should reject if PostgreSQL not found', async t => {
   stub.rejects();
 
-  await t.throws(checkPostgres.task({}, {
+  await t.throws(include.task({}, {
     title: 'title'
   }));
   t.true(stub.callCount === 1);

@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const update = proxyquire('../../../../../bin/tasks/sql/triggers/before/disallow-update-for-default-roles', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/before/disallow-update-for-default-roles', stubs);
 
 test('should create `disallow_update_for_default_roles` trigger', async t => {
-  await t.notThrows(() => update.task({}));
+  await t.notThrows(() => include.task({}));
 });

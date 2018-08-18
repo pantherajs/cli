@@ -13,7 +13,7 @@ const stubs = {
 
 const stub = stubs['../../../utils/sql-task'];
 
-const check = proxyquire('../../../../bin/tasks/sql/misc/check-api-user', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/misc/check-api-user', stubs);
 
 test.serial('should set `ctx.apiUserExists` to true if API user exists', async t => {
   stub.resolves({
@@ -33,7 +33,7 @@ test.serial('should set `ctx.apiUserExists` to true if API user exists', async t
   };
   const task = {};
 
-  await check.task(context, task);
+  await include.task(context, task);
   t.true(context.apiUserExists);
 
   stub.reset();
@@ -57,7 +57,7 @@ test.serial('should set `ctx.apiUserExists` to false if API user does not exist'
   };
   const task = {};
 
-  await check.task(context, task);
+  await include.task(context, task);
   t.false(context.apiUserExists);
 
   stub.reset();

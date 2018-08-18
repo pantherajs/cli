@@ -11,15 +11,15 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const begin = proxyquire('../../../../bin/tasks/sql/misc/begin-transaction', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/misc/begin-transaction', stubs);
 
 test('should begin database transaction', async t => {
-  await t.notThrows(() => begin.task({}));
+  await t.notThrows(() => include.task({}));
 });
 
 test('should set `ctx.inTransaction` to true', async t => {
   const context = {};
 
-  await begin.task(context);
+  await include.task(context);
   t.true(context.inTransaction);
 });

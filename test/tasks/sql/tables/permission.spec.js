@@ -11,7 +11,7 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const permission = proxyquire('../../../../bin/tasks/sql/tables/permission', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/tables/permission', stubs);
 
 test('should create `permission` table', async t => {
   const context = {
@@ -20,5 +20,5 @@ test('should create `permission` table', async t => {
     }
   };
 
-  await t.notThrows(() => permission.task(context));
+  await t.notThrows(() => include.task(context));
 });

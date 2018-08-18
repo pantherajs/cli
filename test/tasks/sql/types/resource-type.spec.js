@@ -11,8 +11,8 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const resourceType = proxyquire('../../../../bin/tasks/sql/types/resource-type', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/types/resource-type', stubs);
 
 test('should create `resource_type` type', async t => {
-  await t.notThrows(() => resourceType.task({}));
+  await t.notThrows(() => include.task({}));
 });

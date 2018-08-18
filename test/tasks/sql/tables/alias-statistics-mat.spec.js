@@ -11,7 +11,7 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const alias = proxyquire('../../../../bin/tasks/sql/tables/alias-statistics-mat', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/tables/alias-statistics-mat', stubs);
 
 test('should create `alias_statistics_mat` table', async t => {
   const context = {
@@ -20,5 +20,5 @@ test('should create `alias_statistics_mat` table', async t => {
     }
   };
 
-  await t.notThrows(() => alias.task(context));
+  await t.notThrows(() => include.task(context));
 });

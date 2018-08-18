@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const trigger = proxyquire('../../../../../bin/tasks/sql/triggers/before/disallow-delete-for-default-roles', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/before/disallow-delete-for-default-roles', stubs);
 
 test('should create `disallow_delete_for_default_roles` trigger', async t => {
-  await t.notThrows(() => trigger.task({}));
+  await t.notThrows(() => include.task({}));
 });

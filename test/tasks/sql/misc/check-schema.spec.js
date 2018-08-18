@@ -13,7 +13,7 @@ const stubs = {
 
 const stub = stubs['../../../utils/sql-task'];
 
-const check = proxyquire('../../../../bin/tasks/sql/misc/check-schema', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/misc/check-schema', stubs);
 
 test.serial('should set `ctx.schemaExists` to true if schema exists', async t => {
   stub.resolves({
@@ -29,7 +29,7 @@ test.serial('should set `ctx.schemaExists` to true if schema exists', async t =>
   };
   const task = {};
 
-  await check.task(context, task);
+  await include.task(context, task);
   t.true(context.schemaExists);
 
   stub.reset();
@@ -49,7 +49,7 @@ test.serial('should set `ctx.schemaExists` to false if schema does not exist', a
   };
   const task = {};
 
-  await check.task(context, task);
+  await include.task(context, task);
   t.false(context.schemaExists);
 
   stub.reset();

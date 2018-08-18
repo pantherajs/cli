@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const insert = proxyquire('../../../../../bin/tasks/sql/triggers/after/insert-alias', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/after/insert-alias', stubs);
 
 test('should create `insert_alias` trigger', async t => {
-  await t.notThrows(() => insert.task({}));
+  await t.notThrows(() => include.task({}));
 });

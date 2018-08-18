@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const update = proxyquire('../../../../../bin/tasks/sql/triggers/after/update-permission', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/after/update-permission', stubs);
 
 test('should create `update_permission` trigger', async t => {
-  await t.notThrows(() => update.task({}));
+  await t.notThrows(() => include.task({}));
 });

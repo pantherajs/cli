@@ -11,7 +11,7 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const set = proxyquire('../../../../bin/tasks/sql/misc/set-search-path', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/misc/set-search-path', stubs);
 
 test('should set search path', async t => {
   const context = {
@@ -20,5 +20,5 @@ test('should set search path', async t => {
     }
   };
 
-  await t.notThrows(() => set.task(context));
+  await t.notThrows(() => include.task(context));
 });

@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const update = proxyquire('../../../../../bin/tasks/sql/triggers/after/update-post', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/after/update-post', stubs);
 
 test('should create `update_post` trigger', async t => {
-  await t.notThrows(() => update.task({}));
+  await t.notThrows(() => include.task({}));
 });

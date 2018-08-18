@@ -11,7 +11,7 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const topicStats = proxyquire('../../../../bin/tasks/sql/views/topic-statistics', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/views/topic-statistics', stubs);
 
 test('should create `topic_statistics` view', async t => {
   const context = {
@@ -20,5 +20,5 @@ test('should create `topic_statistics` view', async t => {
     }
   };
 
-  await t.notThrows(() => topicStats.task(context));
+  await t.notThrows(() => include.task(context));
 });

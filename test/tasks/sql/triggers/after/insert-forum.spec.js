@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const insert = proxyquire('../../../../../bin/tasks/sql/triggers/after/insert-forum', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/after/insert-forum', stubs);
 
 test('should create `insert_forum` trigger', async t => {
-  await t.notThrows(() => insert.task({}));
+  await t.notThrows(() => include.task({}));
 });

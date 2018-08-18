@@ -11,15 +11,15 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const grant = proxyquire('../../../../bin/tasks/sql/misc/grant-user-permissions', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/misc/grant-user-permissions', stubs);
 
 test('should be enabled only if client can query', async t => {
-  t.true(grant.enabled({
+  t.true(include.enabled({
     client: {
       readyForQuery: true
     }
   }));
-  t.false(grant.enabled({
+  t.false(include.enabled({
     client: {
       readyForQuery: false
     }
@@ -34,5 +34,5 @@ test('should grant user permissions', async t => {
     }
   };
 
-  await t.notThrows(() => grant.task(context, { title: 'task' }));
+  await t.notThrows(() => include.task(context, { title: 'task' }));
 });

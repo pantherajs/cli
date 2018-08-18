@@ -11,11 +11,7 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const rollback = proxyquire('../../../../bin/tasks/sql/misc/rollback-transaction', stubs);
-
-const context = () => {
-  return ;
-};
+const include = proxyquire('../../../../bin/tasks/sql/misc/rollback-transaction', stubs);
 
 test('should only be enabled if `ctx.error` is true', t => {
   const context = {
@@ -27,10 +23,10 @@ test('should only be enabled if `ctx.error` is true', t => {
   };
 
   context.error = true;
-  t.true(rollback.enabled(context));
+  t.true(include.enabled(context));
 
   context.error = false;
-  t.false(rollback.enabled(context));
+  t.false(include.enabled(context));
 });
 
 test('should rollback database transaction', async t => {
@@ -42,7 +38,7 @@ test('should rollback database transaction', async t => {
     }
   };
 
-  await t.notThrows(() => rollback.task(context));
+  await t.notThrows(() => include.task(context));
 });
 
 test('should set `ctx.inTransaction` to false', async t => {
@@ -54,6 +50,6 @@ test('should set `ctx.inTransaction` to false', async t => {
     }
   };
 
-  await t.notThrows(() => rollback.task(context));
+  await t.notThrows(() => include.task(context));
   t.false(context.inTransaction);
 });

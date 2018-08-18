@@ -11,8 +11,8 @@ const stubs = {
   '../../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const noncircular = proxyquire('../../../../../bin/tasks/sql/triggers/before/enforce-noncircular-parent-forum-reference', stubs);
+const include = proxyquire('../../../../../bin/tasks/sql/triggers/before/enforce-noncircular-parent-forum-reference', stubs);
 
 test('should create `enforce_noncircular_parent_forum_reference` trigger', async t => {
-  await t.notThrows(() => noncircular.task({}));
+  await t.notThrows(() => include.task({}));
 });

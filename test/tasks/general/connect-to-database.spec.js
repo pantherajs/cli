@@ -15,7 +15,7 @@ const stubs = {
 
 stubs.pg.Client.prototype.connect = sinon.stub().resolves();
 
-const connect = proxyquire('../../../bin/tasks/general/connect-to-database', stubs);
+const include = proxyquire('../../../bin/tasks/general/connect-to-database', stubs);
 
 test('should set `ctx.client`', async t => {
   const ctx = {
@@ -25,7 +25,7 @@ test('should set `ctx.client`', async t => {
     title: 'title'
   };
 
-  await connect.task(ctx, task);
+  await include.task(ctx, task);
   t.truthy(ctx.client);
 });
 
@@ -39,6 +39,6 @@ test('should call `ctx.client.connect`', async t => {
     title: 'title'
   };
 
-  await connect.task(ctx, task);
+  await include.task(ctx, task);
   t.true(ctx.client.connect.called);
 });

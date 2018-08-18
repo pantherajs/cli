@@ -11,7 +11,7 @@ const stubs = {
   '../../../utils/sql-task': sinon.stub().resolves()
 };
 
-const category = proxyquire('../../../../bin/tasks/sql/tables/category', stubs);
+const include = proxyquire('../../../../bin/tasks/sql/tables/category', stubs);
 
 test('should create `category` table', async t => {
   const context = {
@@ -20,5 +20,5 @@ test('should create `category` table', async t => {
     }
   };
 
-  await t.notThrows(() => category.task(context));
+  await t.notThrows(() => include.task(context));
 });
