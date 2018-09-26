@@ -8,3 +8,8 @@
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/pantherajs/cli.svg?style=flat-square)](https://codeclimate.com/github/pantherajs/cli)
 [![Dependencies Status](https://david-dm.org/pantherajs/cli/status.svg?style=flat-square)](https://david-dm.org/pantherajs/cli)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/pantherajs/cli/blob/master/LICENSE)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpantherajs%2Fcli.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpantherajs%2Fcli?ref=badge_shield)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpantherajs%2Fcli.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpantherajs%2Fcli?ref=badge_large)
